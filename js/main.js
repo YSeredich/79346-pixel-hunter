@@ -14,7 +14,7 @@
   let rulesSubmit = rulesElement.querySelector('.rules__button');
   let rulesInput = rulesElement.querySelector('.rules__input');
 
-  rulesInput.oninput = e => {
+  rulesInput.oninput = (e) => {
     if (rulesInput.value) {
       rulesSubmit.removeAttribute('disabled');
     } else {
@@ -50,13 +50,13 @@
     mainElement.appendChild(slides[index]);
   };
 
-  document.querySelector('.next').onclick = e => {
+  document.querySelector('.next').onclick = (e) => {
     e.preventDefault();
 
     select(current + 1);
   };
 
-  document.querySelector('.prev').onclick = e => {
+  document.querySelector('.prev').onclick = (e) => {
     e.preventDefault();
 
     select(current - 1);
