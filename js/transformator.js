@@ -3,14 +3,11 @@
  */
 /**
  *
- * @param htmlString
- * @returns {Element}
+ * @param {string} htmlString
+ * @return {Element}
  */
 export const getElementFromTemplate = (htmlString) => {
   let wrapper = document.createElement('div');
   wrapper.innerHTML = htmlString;
   return wrapper;
 };
-
-
-
