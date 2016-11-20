@@ -2,6 +2,8 @@
  * Created by yulia on 19.11.2016.
  */
 import getElementFromTemplate from '../compile';
+import {select} from '../select';
+import {game1Element} from './game-1';
 const rulesText = `<header class="header">
     <div class="header__back">
       <span class="back">
@@ -26,5 +28,21 @@ const rulesText = `<header class="header">
     </form>
   </div>`;
 const rulesElement = getElementFromTemplate(rulesText);
-export default rulesElement;
 
+let rulesForm = document.querySelector('.rules__form');
+let rulesSubmit = rulesForm.querySelector('.rules__button');
+let rulesInput = rulesForm.querySelector('.rules__input');
+
+rulesInput.oninput = (e) => {
+  if (rulesInput.value) {
+    rulesSubmit.removeAttribute('disabled');
+  } else {
+    rulesSubmit.setAttribute('disabled', '');
+  }
+};
+
+rulesForm.onsubmit = (e) => {
+  select(game1Element);
+};
+
+export default rulesElement;

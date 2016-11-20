@@ -2,6 +2,8 @@
  * Created by yulia on 19.11.2016.
  */
 import getElementFromTemplate from '../compile';
+import select from '../select';
+import game3Element from './game-3';
 const game2Text = `<header class="header">
     <div class="header__back">
       <span class="back">
@@ -47,5 +49,13 @@ const game2Text = `<header class="header">
     </div>
   </div>`;
 const game2Element = getElementFromTemplate(game2Text);
-export default game2Element;
 
+let gameAnswers = document.querySelectorAll('.game__answer');
+for ( let i = 0; i < gameAnswers.length; i++) {
+  gameAnswers[i].onclick = (e) => {
+    e.preventDefault();
+    select(game3Element);
+  };
+}
+
+export default game2Element;
