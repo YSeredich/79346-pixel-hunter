@@ -2,6 +2,7 @@
  * Created by yulia on 19.11.2016.
  */
 import getElementFromTemplate from '../compile';
+
 const statsText = `<header class="header">
     <div class="header__back">
       <span class="back">
@@ -110,5 +111,7 @@ const statsText = `<header class="header">
       </tr>
     </table>
   </div>`;
+
 const statsElement = getElementFromTemplate(statsText);
+
 export default statsElement;

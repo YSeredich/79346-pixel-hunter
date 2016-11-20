@@ -5,12 +5,11 @@
  *
  * @param {Element} slide
  */
-export const select = (slide) => {
+export default select = (slide) => {
   let mainElement = document.getElementById('main');
-  console.log(mainElement);
   mainElement.innerHTML = '';
   let children = slide.childNodes;
   for ( let i = 0; i < children.length; i++ ) {
-    mainElement.appendChild(children[i].cloneNode(true));
+    mainElement.appendChild(children[i]);
   }
 };
