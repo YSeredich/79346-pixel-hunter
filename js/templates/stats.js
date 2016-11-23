@@ -1,7 +1,7 @@
 /**
  * Created by yulia on 19.11.2016.
  */
-import {getElementFromTemplate} from '../transformator';
+import getElementFromTemplate from '../compile';
 const statsText = `<header class="header">
     <div class="header__back">
       <span class="back">
@@ -110,4 +110,5 @@ const statsText = `<header class="header">
       </tr>
     </table>
   </div>`;
-export const statsElement = getElementFromTemplate(statsText);
+const statsElement = getElementFromTemplate(statsText);
+export default statsElement;

@@ -1,7 +1,7 @@
 /**
  * Created by yulia on 19.11.2016.
  */
-import {getElementFromTemplate} from '../transformator';
+import getElementFromTemplate from '../compile';
 const rulesText = `<header class="header">
     <div class="header__back">
       <span class="back">
@@ -25,5 +25,6 @@ const rulesText = `<header class="header">
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
   </div>`;
-export const rulesElement = getElementFromTemplate(rulesText);
+const rulesElement = getElementFromTemplate(rulesText);
+export default rulesElement;
 

@@ -1,7 +1,7 @@
 /**
  * Created by yulia on 19.11.2016.
  */
-import {getElementFromTemplate} from '../transformator';
+import getElementFromTemplate from '../compile';
 const game3Text = `<header class="header">
     <div class="header__back">
       <span class="back">
@@ -44,4 +44,5 @@ const game3Text = `<header class="header">
       </ul>
     </div>
   </div>`;
-export const game3Element = getElementFromTemplate(game3Text);
+const game3Element = getElementFromTemplate(game3Text);
+export default game3Element;
