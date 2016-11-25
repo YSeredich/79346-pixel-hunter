@@ -1,16 +1,13 @@
+import introElement from './templates/intro';
+import greetingElement from './templates/greeting';
+import rulesElement from './templates/rules';
+import game1Element from './templates/game-1';
+import game2Element from './templates/game-2';
+import game3Element from './templates/game-3';
+import statsElement from './templates/stats';
 (function () {
 
-  let loadTemplate = (templateName) => {
-    let node = document.createElement('span');
-    let template = document.getElementById(templateName);
-    let content = template.content ? template.content : template;
-    node.appendChild(content);
-    return node.cloneNode(true);
-  };
-
-
   // Rules
-  let rulesElement = loadTemplate('rules');
   let rulesSubmit = rulesElement.querySelector('.rules__button');
   let rulesInput = rulesElement.querySelector('.rules__input');
 
@@ -34,20 +31,23 @@
   mainElement.after(switcher);
 
   let slides = [
-    loadTemplate('intro'),
-    loadTemplate('greeting'),
+    introElement,
+    greetingElement,
     rulesElement,
-    loadTemplate('game-1'),
-    loadTemplate('game-2'),
-    loadTemplate('game-3'),
-    loadTemplate('stats')
+    game1Element,
+    game2Element,
+    game3Element,
+    statsElement
   ];
   let current = -1;
 
   let select = (index) => {
     current = index;
     mainElement.innerHTML = '';
-    mainElement.appendChild(slides[index]);
+    let children = slides[index].childNodes;
+    for ( let i = 0; i < children.length; i++ ) {
+      mainElement.appendChild(children[i].cloneNode(true));
+    }
   };
 
   document.querySelector('.next').onclick = (e) => {
