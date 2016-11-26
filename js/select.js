@@ -5,11 +5,13 @@
  *
  * @param {Element} slide
  */
-export default select = (slide) => {
+const select = (slide) => {
   let mainElement = document.getElementById('main');
   mainElement.innerHTML = '';
   let children = slide.childNodes;
-  for ( let i = 0; i < children.length; i++ ) {
-    mainElement.appendChild(children[i]);
+  while (children.length) {
+    mainElement.appendChild(children[0]);
   }
 };
+
+export default select;

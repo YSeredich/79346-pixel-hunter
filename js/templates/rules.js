@@ -42,6 +42,7 @@ rulesInput.oninput = (e) => {
   }
 };
 rulesForm.onsubmit = (e) => {
+  e.preventDefault();
   select(game1Element);
 };
 

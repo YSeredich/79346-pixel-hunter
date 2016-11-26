@@ -6,8 +6,10 @@
  * @param {string} htmlString
  * @return {Element}
  */
-export default getElementFromTemplate = (htmlString) => {
+const getElementFromTemplate = (htmlString) => {
   let wrapper = document.createElement('div');
   wrapper.innerHTML = htmlString;
   return wrapper;
 };
+
+export default getElementFromTemplate;
