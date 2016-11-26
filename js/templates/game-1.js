@@ -1,7 +1,10 @@
 /**
  * Created by yulia on 19.11.2016.
  */
+import select from '../select';
+import game2Element from './game-2';
 import getElementFromTemplate from '../compile';
+
 const game1Text = `<header class="header">
     <div class="header__back">
         <span class="back">
@@ -57,5 +60,14 @@ const game1Text = `<header class="header">
       </ul>
     </div>
   </div>`;
-const game1Element = getElementFromTemplate(game1Text);
+
+let game1Element = getElementFromTemplate(game1Text);
+let gameAnswers = game1Element.querySelectorAll('.game__answer');
+for ( let i = 0; i < gameAnswers.length; i++) {
+  gameAnswers[i].onclick = (e) => {
+    e.preventDefault();
+    select(game2Element);
+  };
+}
+
 export default game1Element;

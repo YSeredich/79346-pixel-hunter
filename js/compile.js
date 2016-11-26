@@ -11,4 +11,5 @@ const getElementFromTemplate = (htmlString) => {
   wrapper.innerHTML = htmlString;
   return wrapper;
 };
+
 export default getElementFromTemplate;
