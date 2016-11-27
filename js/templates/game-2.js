@@ -1,54 +1,56 @@
 /**
  * Created by yulia on 19.11.2016.
  */
+import header from './components/game-header';
+import stats from './components/stats';
 import getElementFromTemplate from '../compile';
 import select from '../select';
 import game3Element from './game-3';
 
-const game2Text = `<header class="header">
-    <div class="header__back">
-      <span class="back">
-        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-        <img src="img/logo_small.png" width="101" height="44">
-      </span>
-    </div>
-    <h1 class="game__timer">NN</h1>
-    <div class="game__lives">
-      <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-    </div>
-  </header>
-  <div class="game">
-    <p class="game__task">Угадай, фото или рисунок?</p>
-    <form class="game__content  game__content--wide">
-      <div class="game__option">
-        <img src="http://placehold.it/705x455" alt="Option 1" width="705" height="455">
-        <label class="game__answer  game__answer--photo">
-          <input name="question1" type="radio" value="photo">
+const game2Data = {
+  header: {
+    full_lives: 2,
+    total_lives: 3
+  },
+  content: {
+    question_text: 'Угадай, фото или рисунок?',
+    task: {
+      name: 'question1',
+      alt: 'Option 1',
+      src: 'http://placehold.it/705x455'
+    },
+    stats: {}
+  }
+};
+
+const action = (name) => {
+  return `<label class="game__answer game__answer--photo">
+          <input name="${name}" type="radio" value="photo">
           <span>Фото</span>
         </label>
-        <label class="game__answer  game__answer--wide  game__answer--paint">
-          <input name="question1" type="radio" value="paint">
+        <label class="game__answer game__answer--paint">
+          <input name="${name}" type="radio" value="paint">
           <span>Рисунок</span>
-        </label>
-      </div>
+        </label>`;
+};
+
+const option = (task) => {
+  return `<div class="game__option">
+        <img src="${task.src}" alt="${task.alt}" width="705" height="455">
+        ${action(task.name)}
+      </div>`;
+};
+
+const game = `<div class="game">
+    <p class="game__task">${game2Data.content.question_text}</p>
+    <form class="game__content  game__content--wide">
+      ${option(game2Data.content.task)}
     </form>
-    <div class="stats">
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--unknown"></li>
-      </ul>
-    </div>
+    ${stats}
   </div>`;
+
+const game2Text = `${header(game2Data.header)}
+  ${game}`;
 
 let game2Element = getElementFromTemplate(game2Text);
 let gameAnswers = game2Element.querySelectorAll('.game__answer');

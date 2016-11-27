@@ -58,11 +58,11 @@ const game = `<div class="game">
     <form class="game__content">
       ${options(game1Data.content.tasks)}
     </form>
-  ${stats}`;
+  ${stats}
+  </div>`;
 
 const game1Text = `${header(game1Data.header)}
-  ${game}
-  </div>`;
+  ${game}`;
 
 let game1Element = getElementFromTemplate(game1Text);
 let gameAnswers = game1Element.querySelectorAll('.game__answer');
