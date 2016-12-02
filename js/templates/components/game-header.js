@@ -5,12 +5,6 @@ import back from './back';
 import timer from './timer';
 import lives from './lives';
 
-const header = (headerData) => {
-  return `<header class="header">
-    ${back}
-    ${timer}
-    ${lives(headerData.full_lives, headerData.total_lives)}
-  </header>`;
-};
+const header = (headerData) => `<header class="header">${back}${timer}${lives(headerData.full_lives, headerData.total_lives)}</header>`;
 
 export default header;

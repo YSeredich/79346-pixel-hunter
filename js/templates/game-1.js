@@ -3,6 +3,7 @@
  */
 import header from './components/game-header';
 import stats from './components/stats';
+import action from './components/action';
 import select from '../select';
 import getElementFromTemplate from '../compile';
 import game2Element from './game-2';
@@ -23,34 +24,22 @@ const game1Data = {
       alt: 'Option 2',
       src: 'http://placehold.it/468x458'
     }],
-    stats: {}
+    stats: {
+      quest_count: 10,
+      passed: [
+        'WR', 'SL', 'FS', 'CR'
+      ]
+    }
   }
-};
-
-const action = (name) => {
-  return `<label class="game__answer game__answer--photo">
-          <input name="${name}" type="radio" value="photo">
-          <span>Фото</span>
-        </label>
-        <label class="game__answer game__answer--paint">
-          <input name="${name}" type="radio" value="paint">
-          <span>Рисунок</span>
-        </label>`;
-};
-
-const option = (task) => {
-  return `<div class="game__option">
-        <img src="${task.src}" alt=${task.alt}" width="468" height="458">
-        ${action(task.name)}
-      </div>`;
 };
 
 const options = (tasks) => {
-  let content = '';
-  for (let i = 0; i < tasks.length; i++) {
-    content += option(tasks[i]);
-  }
-  return content;
+  const _callback = (item) => `<div class="game__option">
+        <img src="${item.src}" alt=${item.alt}" width="468" height="458">
+        ${action(item.name)}
+      </div>`;
+  let content = tasks.map(_callback);
+  return content.join('');
 };
 
 const game = `<div class="game">
@@ -58,11 +47,10 @@ const game = `<div class="game">
     <form class="game__content">
       ${options(game1Data.content.tasks)}
     </form>
-  ${stats}
+  <div class="stats">${stats(game1Data.content.stats)}</div>
   </div>`;
 
-const game1Text = `${header(game1Data.header)}
-  ${game}`;
+const game1Text = `${header(game1Data.header)}${game}`;
 
 let game1Element = getElementFromTemplate(game1Text);
 let gameAnswers = game1Element.querySelectorAll('.game__answer');

@@ -27,26 +27,22 @@ const game3Data = {
       alt: 'Option 1',
       src: 'http://placehold.it/304x455'
     }],
-    stats: {}
+    stats: {
+      quest_count: 10,
+      passed: [
+        'WR', 'SL', 'FS', 'CR'
+      ]
+    }
   }
-};
-
-const option = (task) => {
-  let selected = '';
-  if (task.isSelected) {
-    selected = ' game__option--selected';
-  }
-  return `<div class="game__option${selected}">
-        <img src="${task.src}" alt="${task.alt}" width="304" height="455">
-      </div>`;
 };
 
 const options = (tasks) => {
-  let content = '';
-  for (let i = 0; i < tasks.length; i++) {
-    content += option(tasks[i]);
-  }
-  return content;
+  const _callback = (item) => `<div class="game__option${item.isSelected ? ' game__option--selected' : ''}">
+        <img src="${item.src}" alt="${item.alt}" width="304" height="455">
+      </div>`;
+  let content = tasks.map(_callback);
+  return content.join('');
+
 };
 
 const game = `<div class="game">
@@ -54,11 +50,10 @@ const game = `<div class="game">
     <form class="game__content  game__content--triple">
       ${options(game3Data.content.tasks)}
     </form>
-    ${stats}
+    <div class="stats">${stats(game3Data.content.stats)}</div>
   </div>`;
 
-const game3Text = `${header(game3Data.header)}
-  ${game}`;
+const game3Text = `${header(game3Data.header)}${game}`;
 
 let game3Element = getElementFromTemplate(game3Text);
 let gameOption = game3Element.querySelectorAll('.game__option');
