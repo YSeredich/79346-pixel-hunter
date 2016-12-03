@@ -1,65 +1,56 @@
 /**
  * Created by yulia on 19.11.2016.
  */
+import header from './components/game-header';
+import stats from './components/stats';
+import action from './components/action';
 import select from '../select';
-import game2Element from './game-2';
 import getElementFromTemplate from '../compile';
+import game2Element from './game-2';
 
-const game1Text = `<header class="header">
-    <div class="header__back">
-        <span class="back">
-          <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-          <img src="img/logo_small.png" width="101" height="44">
-        </span>
-    </div>
-    <h1 class="game__timer">NN</h1>
-    <div class="game__lives">
-      <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-    </div>
-  </header>
-  <div class="game">
-    <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
+const game1Data = {
+  header: {
+    full_lives: 2,
+    total_lives: 3
+  },
+  content: {
+    question_text: 'Угадайте для каждого изображения фото или рисунок?',
+    tasks: [{
+      name: 'question1',
+      alt: 'Option 1',
+      src: 'http://placehold.it/468x458'
+    }, {
+      name: 'question2',
+      alt: 'Option 2',
+      src: 'http://placehold.it/468x458'
+    }],
+    stats: {
+      quest_count: 10,
+      passed: [
+        'WR', 'SL', 'FS', 'CR'
+      ]
+    }
+  }
+};
+
+const options = (tasks) => {
+  const _callback = (item) => `<div class="game__option">
+        <img src="${item.src}" alt=${item.alt}" width="468" height="458">
+        ${action(item.name)}
+      </div>`;
+  let content = tasks.map(_callback);
+  return content.join('');
+};
+
+const game = `<div class="game">
+    <p class="game__task">${game1Data.content.question_text}</p>
     <form class="game__content">
-      <div class="game__option">
-        <img src="http://placehold.it/468x458" alt="Option 1" width="468" height="458">
-        <label class="game__answer game__answer--photo">
-          <input name="question1" type="radio" value="photo">
-          <span>Фото</span>
-        </label>
-        <label class="game__answer game__answer--paint">
-          <input name="question1" type="radio" value="paint">
-          <span>Рисунок</span>
-        </label>
-      </div>
-      <div class="game__option">
-        <img src="http://placehold.it/468x458" alt="Option 2" width="468" height="458">
-        <label class="game__answer  game__answer--photo">
-          <input name="question2" type="radio" value="photo">
-          <span>Фото</span>
-        </label>
-        <label class="game__answer  game__answer--paint">
-          <input name="question2" type="radio" value="paint">
-          <span>Рисунок</span>
-        </label>
-      </div>
+      ${options(game1Data.content.tasks)}
     </form>
-    <div class="stats">
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-      </ul>
-    </div>
+  <div class="stats">${stats(game1Data.content.stats)}</div>
   </div>`;
+
+const game1Text = `${header(game1Data.header)}${game}`;
 
 let game1Element = getElementFromTemplate(game1Text);
 let gameAnswers = game1Element.querySelectorAll('.game__answer');

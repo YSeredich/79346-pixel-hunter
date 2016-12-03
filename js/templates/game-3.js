@@ -1,52 +1,59 @@
 /**
  * Created by yulia on 19.11.2016.
  */
+import header from './components/game-header';
+import stats from './components/stats';
 import getElementFromTemplate from '../compile';
 import select from '../select';
 import statsElement from './stats';
 
-const game3Text = `<header class="header">
-    <div class="header__back">
-      <span class="back">
-        <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
-        <img src="img/logo_small.png" width="101" height="44">
-      </span>
-    </div>
-    <h1 class="game__timer">NN</h1>
-    <div class="game__lives">
-      <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-      <img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">
-    </div>
-  </header>
-  <div class="game">
-    <p class="game__task">Найдите рисунок среди изображений</p>
+const game3Data = {
+  header: {
+    full_lives: 2,
+    total_lives: 3
+  },
+  content: {
+    question_text: 'Найдите рисунок среди изображений',
+    tasks: [{
+      isSelected: false,
+      alt: 'Option 1',
+      src: 'http://placehold.it/304x455'
+    }, {
+      isSelected: true,
+      alt: 'Option 1',
+      src: 'http://placehold.it/304x455'
+    }, {
+      isSelected: false,
+      alt: 'Option 1',
+      src: 'http://placehold.it/304x455'
+    }],
+    stats: {
+      quest_count: 10,
+      passed: [
+        'WR', 'SL', 'FS', 'CR'
+      ]
+    }
+  }
+};
+
+const options = (tasks) => {
+  const _callback = (item) => `<div class="game__option${item.isSelected ? ' game__option--selected' : ''}">
+        <img src="${item.src}" alt="${item.alt}" width="304" height="455">
+      </div>`;
+  let content = tasks.map(_callback);
+  return content.join('');
+
+};
+
+const game = `<div class="game">
+    <p class="game__task">${game3Data.content.question_text}</p>
     <form class="game__content  game__content--triple">
-      <div class="game__option">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-      </div>
-      <div class="game__option  game__option--selected">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-      </div>
-      <div class="game__option">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
-      </div>
+      ${options(game3Data.content.tasks)}
     </form>
-    <div class="stats">
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--unknown"></li>
-      </ul>
-    </div>
+    <div class="stats">${stats(game3Data.content.stats)}</div>
   </div>`;
+
+const game3Text = `${header(game3Data.header)}${game}`;
 
 let game3Element = getElementFromTemplate(game3Text);
 let gameOption = game3Element.querySelectorAll('.game__option');
