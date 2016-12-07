@@ -4,48 +4,39 @@
 import getElementFromTemplate from '../compile';
 import select from '../select';
 import back from './components/back';
-import game1Element from './game-1';
+import game1Function from './game-1';
+import dataUnited from '../data';
 
-const rulesData = {
-  title: 'Правила',
-  text: `Угадай 10 раз для каждого изображения фото <img
-      src="img/photo_icon.png" width="16" height="16"> или рисунок <img
-      src="img/paint_icon.png" width="16" height="16" alt="">.<br>
-      Фотографиями или рисунками могут быть оба изображения.<br>
-      На каждую попытку отводится 30 секунд.<br>
-      Ошибиться можно не более 3 раз.<br>
-      <br>
-      Готовы?`,
-  placeholder: 'Ваше Имя',
-  buttonText: 'Go!'
+const rulesFunction = (data) => {
 
-};
-
-const rulesText = `<header class="header">${back}</header>
+  const rulesText = `<header class="header">${back}</header>
 <div class="rules  central--none">
-    <h1 class="rules__title">${rulesData.title}</h1>
-    <p class="rules__description">${rulesData.text}</p>
+    <h1 class="rules__title">${data.title}</h1>
+    <p class="rules__description">${data.text}</p>
     <form class="rules__form">
-      <input class="rules__input" type="text" placeholder="${rulesData.placeholder}">
-      <button class="rules__button  continue" type="submit" disabled>${rulesData.buttonText}</button>
+      <input class="rules__input" type="text" placeholder="${data.placeholder}">
+      <button class="rules__button  continue" type="submit" disabled>${data.buttonText}</button>
     </form>
   </div>`;
 
-let rulesElement = getElementFromTemplate(rulesText);
-let rulesForm = rulesElement.querySelector('.rules__form');
-let rulesSubmit = rulesForm.querySelector('.rules__button');
-let rulesInput = rulesForm.querySelector('.rules__input');
+  let rulesElement = getElementFromTemplate(rulesText);
+  let rulesForm = rulesElement.querySelector('.rules__form');
+  let rulesSubmit = rulesForm.querySelector('.rules__button');
+  let rulesInput = rulesForm.querySelector('.rules__input');
 
-rulesInput.oninput = (e) => {
-  if (rulesInput.value) {
-    rulesSubmit.removeAttribute('disabled');
-  } else {
-    rulesSubmit.setAttribute('disabled', '');
-  }
-};
-rulesForm.onsubmit = (e) => {
-  e.preventDefault();
-  select(game1Element);
+  rulesInput.oninput = (e) => {
+    if (rulesInput.value) {
+      rulesSubmit.removeAttribute('disabled');
+    } else {
+      rulesSubmit.setAttribute('disabled', '');
+    }
+  };
+  rulesForm.onsubmit = (e) => {
+    e.preventDefault();
+    select(game1Function(dataUnited.game1Data));
+  };
+
+  return rulesElement;
 };
 
-export default rulesElement;
+export default rulesFunction;

@@ -3,20 +3,21 @@
  */
 import getElementFromTemplate from '../compile';
 import select from '../select';
-import greetingElement from './greeting';
+import greetingFunction from './greeting';
+import dataUnited from '../data';
 
-const introData = {
-  text: ' Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.'
+const introFunction = (data) => {
+  const introText = `<div class="intro"><h1 class="intro__asterisk">*</h1>
+      <p class="intro__motto"><sup>*</sup>${data.text}</p></div>`;
+
+  let introElement = getElementFromTemplate(introText);
+  let greetingAsterisk = introElement.querySelector('.intro__asterisk');
+  greetingAsterisk.onclick = (e) => {
+    e.preventDefault();
+    select(greetingFunction(dataUnited.greetingData));
+  };
+
+  return introElement;
 };
 
-const introText = `<div class="intro"><h1 class="intro__asterisk">*</h1>
-      <p class="intro__motto"><sup>*</sup>${introData.text}</p></div>`;
-
-let introElement = getElementFromTemplate(introText);
-let greetingAsterisk = introElement.querySelector('.intro__asterisk');
-greetingAsterisk.onclick = (e) => {
-  e.preventDefault();
-  select(greetingElement);
-};
-
-export default introElement;
+export default introFunction;
