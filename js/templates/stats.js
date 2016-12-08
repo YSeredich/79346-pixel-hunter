@@ -2,7 +2,7 @@
  * Created by yulia on 19.11.2016.
  */
 import getElementFromTemplate from '../compile';
-import stats from './components/stats';
+import stats from './components/game-footer';
 import back from './components/back';
 
 const statsFunction = (data) => {

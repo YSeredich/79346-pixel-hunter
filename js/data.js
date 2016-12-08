@@ -34,13 +34,21 @@ dataUnited.rulesData = {
   buttonText: 'Go!'
 };
 
-dataUnited.game1Data = {
-  header: {
-    full_lives: 2,
-    total_lives: 3
-  },
-  content: {
-    question_text: 'Угадайте для каждого изображения фото или рисунок?',
+dataUnited.headerData = {
+  full_lives: 2,
+  total_lives: 3
+};
+
+dataUnited.footerData = {
+  quest_count: 10,
+  passed: [
+    'WR', 'SL', 'FS', 'CR'
+  ]
+};
+
+dataUnited.questions = [
+  {
+    gameType: 1,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
@@ -49,44 +57,18 @@ dataUnited.game1Data = {
       name: 'question2',
       alt: 'Option 2',
       src: 'http://placehold.it/468x458'
-    }],
-    stats: {
-      quest_count: 10,
-      passed: [
-        'WR', 'SL', 'FS', 'CR'
-      ]
-    }
-  }
-};
-
-dataUnited.game2Data = {
-  header: {
-    full_lives: 2,
-    total_lives: 3
+    }]
   },
-  content: {
-    question_text: 'Угадай, фото или рисунок?',
+  {
+    gameType: 2,
     task: {
       name: 'question1',
       alt: 'Option 1',
       src: 'http://placehold.it/705x455'
-    },
-    stats: {
-      quest_count: 10,
-      passed: [
-        'WR', 'SL', 'FS', 'CR'
-      ]
     }
-  }
-};
-
-dataUnited.game3Data = {
-  header: {
-    full_lives: 2,
-    total_lives: 3
   },
-  content: {
-    question_text: 'Найдите рисунок среди изображений',
+  {
+    gameType: 3,
     tasks: [{
       isSelected: false,
       alt: 'Option 1',
@@ -99,15 +81,99 @@ dataUnited.game3Data = {
       isSelected: false,
       alt: 'Option 1',
       src: 'http://placehold.it/304x455'
-    }],
-    stats: {
-      quest_count: 10,
-      passed: [
-        'WR', 'SL', 'FS', 'CR'
-      ]
+    }]
+  },
+  {
+    gameType: 1,
+    tasks: [{
+      name: 'question1',
+      alt: 'Option 1',
+      src: 'http://placehold.it/468x458'
+    }, {
+      name: 'question2',
+      alt: 'Option 2',
+      src: 'http://placehold.it/468x458'
+    }]
+  },
+  {
+    gameType: 2,
+    task: {
+      name: 'question1',
+      alt: 'Option 1',
+      src: 'http://placehold.it/705x455'
     }
+  },
+  {
+    gameType: 3,
+    tasks: [{
+      isSelected: false,
+      alt: 'Option 1',
+      src: 'http://placehold.it/304x455'
+    }, {
+      isSelected: true,
+      alt: 'Option 1',
+      src: 'http://placehold.it/304x455'
+    }, {
+      isSelected: false,
+      alt: 'Option 1',
+      src: 'http://placehold.it/304x455'
+    }]
+  },
+  {
+    gameType: 1,
+    tasks: [{
+      name: 'question1',
+      alt: 'Option 1',
+      src: 'http://placehold.it/468x458'
+    }, {
+      name: 'question2',
+      alt: 'Option 2',
+      src: 'http://placehold.it/468x458'
+    }]
+  },
+  {
+    gameType: 2,
+    task: {
+      name: 'question1',
+      alt: 'Option 1',
+      src: 'http://placehold.it/705x455'
+    }
+  },
+  {
+    gameType: 3,
+    tasks: [{
+      isSelected: false,
+      alt: 'Option 1',
+      src: 'http://placehold.it/304x455'
+    }, {
+      isSelected: true,
+      alt: 'Option 1',
+      src: 'http://placehold.it/304x455'
+    }, {
+      isSelected: false,
+      alt: 'Option 1',
+      src: 'http://placehold.it/304x455'
+    }]
+  },
+  {
+    gameType: 1,
+    tasks: [{
+      name: 'question1',
+      alt: 'Option 1',
+      src: 'http://placehold.it/468x458'
+    }, {
+      name: 'question2',
+      alt: 'Option 2',
+      src: 'http://placehold.it/468x458'
+    }]
   }
-};
+];
+
+dataUnited.questionText = [
+  'Угадайте для каждого изображения фото или рисунок?',
+  'Угадай, фото или рисунок?',
+  'Найдите рисунок среди изображений'
+];
 
 dataUnited.statsData = {
   title: 'Победа!',
