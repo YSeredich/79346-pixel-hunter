@@ -14,6 +14,8 @@ const imagemin = require('gulp-imagemin');
 const sourcemaps = require('gulp-sourcemaps');
 const babel = require('gulp-babel');
 const webpack = require('gulp-webpack');
+const mocha = require('gulp-mocha');
+require('babel-register');
 
 gulp.task('style', function () {
   gulp.src('sass/style.scss')
@@ -75,9 +77,9 @@ gulp.task('copy-html', function () {
 
 gulp.task('copy', ['copy-html', 'scripts', 'style'], function () {
   gulp.src([
-    'fonts/**/*.{woff,woff2}',
-    'img/*.*'
-  ], {base: '.'})
+      'fonts/**/*.{woff,woff2}',
+      'img/*.*'
+    ], {base: '.'})
     .pipe(gulp.dest('build'));
 });
 
@@ -108,3 +110,14 @@ gulp.task('assemble', ['clean'], function () {
 });
 
 gulp.task('build', ['assemble', 'imagemin']);
+
+gulp.task('test', function () {
+  return gulp
+    .src(['js/**/*.test.js'], { read: false })
+    .pipe(mocha({
+      compilers: {
+        js: 'babel-register'
+      },
+      reporter: 'spec'
+    }));
+});
