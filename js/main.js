@@ -1,4 +1,5 @@
-import introElement from './templates/intro';
+import introFunction from './templates/intro';
 import select from './select';
+import dataUnited from './data';
 
-select(introElement);
+select(introFunction(dataUnited.introData));
