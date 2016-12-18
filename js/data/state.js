@@ -28,22 +28,20 @@ export let initialState = {
   ]
 };
 
-export const setLives = ( round, lives ) => {
+export const setLives = (round, lives) => {
   if (lives < 0 || lives > 3) {
     throw new RangeError('This number cant be number of lives');
   } else {
-    return Object.assign({}, round, {
-      lives: lives
-    });
+    return Object.assign({}, round, {lives});
   }
 };
 
-export const getLives = ( round ) => {
+export const getLives = (round) => {
   return round.lives;
 };
 
-export const decreaseLives = ( round ) => {
-  if ( round.lives < 1 ) {
+export const decreaseLives = (round) => {
+  if (round.lives < 1) {
     throw new RangeError('You have an irreducible number of lives');
   } else {
     return Object.assign({}, round, {
@@ -52,22 +50,20 @@ export const decreaseLives = ( round ) => {
   }
 };
 
-export const setCurrent = ( round, current ) => {
-  if (current < 0 || current > 9) {
+export const setCurrent = (round, currentTask) => {
+  if (currentTask < 0 || currentTask > 9) {
     throw new RangeError('This number cant be number of current task');
   } else {
-    return Object.assign({}, round, {
-      currentTask: current
-    });
+    return Object.assign({}, round, {currentTask});
   }
 };
 
-export const getCurrent = ( round ) => {
+export const getCurrent = (round) => {
   return round.currentTask;
 };
 
-export const increaseCurrent = ( round ) => {
-  if ( round.currentTask === 9 ) {
+export const increaseCurrent = (round) => {
+  if (round.currentTask === 9) {
     throw new RangeError('You are at the last task now');
   } else {
     return Object.assign({}, round, {
@@ -76,42 +72,38 @@ export const increaseCurrent = ( round ) => {
   }
 };
 
-export const setTime = ( resultTask, time ) => {
-  if ( time < 0 || time > 30 ) {
+export const setTime = (resultTask, time) => {
+  if (time < 0 || time > 30) {
     throw new RangeError('This number cant be number of tasks time');
   } else {
-    return Object.assign({}, resultTask, {
-      time: time
-    });
+    return Object.assign({}, resultTask, {time});
   }
 };
 
-export const getTime = ( resultTask ) => {
+export const getTime = (resultTask) => {
   return resultTask.time;
 };
 
-export const determineCorrect = ( resultTask ) => {
+export const determineCorrect = (resultTask) => {
   const answer = resultTask.answer;
   const real = resultTask.realAnswer;
   let isCorrect;
-  if ( answer.length === real.length ) {
-    isCorrect = answer.every( ( item, i ) => {
-      return Boolean( item === real[i] );
+  if (answer.length === real.length) {
+    isCorrect = answer.every((item, i) => {
+      return Boolean(item === real[i]);
     });
   } else {
     isCorrect = false;
   }
-  return Object.assign({}, resultTask, {
-    isCorrect: isCorrect
-  });
+  return Object.assign({}, resultTask, {isCorrect});
 
 };
 
-export const getCorrectness = ( resultTask ) => {
+export const getCorrectness = (resultTask) => {
   return resultTask.isCorrect;
 };
 
-export const determineAnswerType = ( resultTask ) => {
+export const determineAnswerType = (resultTask) => {
   let res;
 
   if (resultTask.isCorrect === true) {
@@ -123,7 +115,7 @@ export const determineAnswerType = ( resultTask ) => {
     } else {
       res = statsType.CORRECT;
     }
-  } else if ( resultTask.isCorrect === false ) {
+  } else if (resultTask.isCorrect === false) {
     res = statsType.WRONG;
   } else {
     res = statsType.UNKNOWN;
@@ -133,25 +125,25 @@ export const determineAnswerType = ( resultTask ) => {
   });
 };
 
-export const getAnswerType = ( resultTask ) => {
+export const getAnswerType = (resultTask) => {
   return resultTask.statsType;
 };
 
-export const countTotal = ( round ) => {
+export const countTotal = (round) => {
   let total;
-  if ( round.isWin === true ) {
+  if (round.isWin === true) {
     let correct = 0;
     let bonuses = round.lives;
     let fines = 0;
     const result = round.result;
 
-    result.forEach( ( item ) => {
+    result.forEach((item) => {
       if (item.isCorrect === true) {
         correct += 1;
       }
-      if ( item.statsType === statsType.SLOW ) {
+      if (item.statsType === statsType.SLOW) {
         fines += 1;
-      } else if ( item.statsType === statsType.FAST ) {
+      } else if (item.statsType === statsType.FAST) {
         bonuses += 1;
       }
     });
@@ -174,16 +166,12 @@ export const countTotal = ( round ) => {
   return Object.assign({}, round, total);
 };
 
-export const setUserAnswer = ( resultTask, arr ) => {
-  return Object.assign({}, resultTask, {
-    answer: arr
-  });
+export const setUserAnswer = (resultTask, answer) => {
+  return Object.assign({}, resultTask, {answer});
 };
 
-export const setRealAnswer = ( resultTask, arr ) => {
-  return Object.assign({}, resultTask, {
-    realAnswer: arr
-  });
+export const setRealAnswer = (resultTask, realAnswer) => {
+  return Object.assign({}, resultTask, {realAnswer});
 };
 
 

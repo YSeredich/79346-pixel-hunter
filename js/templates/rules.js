@@ -33,7 +33,7 @@ const rulesFunction = (data) => {
   };
   rulesForm.onsubmit = (e) => {
     e.preventDefault();
-    select(gameScreenFunction(dataUnited.headerData, dataUnited.questions[0], dataUnited.footerData, 0));
+    select(gameScreenFunction(dataUnited.headerData, dataUnited.questions[0], dataUnited.footerData, 0), true);
   };
 
   return rulesElement;

@@ -22,7 +22,7 @@ const gameScreenFunction = (headerData, questionData, footerData, i) => {
 
   let _callback = (e) => {
     if ( i + 1 < 10) {
-      select(gameScreenFunction(dataUnited.headerData, dataUnited.questions[i + 1], dataUnited.footerData, i + 1));
+      select(gameScreenFunction(dataUnited.headerData, dataUnited.questions[i + 1], dataUnited.footerData, i + 1), true);
     } else {
       select(statsFunction(dataUnited.statsData));
     }
