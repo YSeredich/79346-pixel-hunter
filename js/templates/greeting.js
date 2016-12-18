@@ -4,7 +4,7 @@
 import getElementFromTemplate from '../compile';
 import select from '../select';
 import rulesFunction from './rules';
-import dataUnited from '../data';
+import dataUnited from '../data/game-data';
 
 const greetingFunction = (data) => {
   const greetingText = `<div class="greeting  central--blur">

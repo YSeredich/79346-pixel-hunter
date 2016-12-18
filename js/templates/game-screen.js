@@ -3,7 +3,7 @@
  */
 import header from './components/game-header';
 import stats from './components/game-footer';
-import dataUnited from '../data';
+import dataUnited from '../data/game-data';
 import game1Function from './game-1';
 import game2Function from './game-2';
 import game3Function from './game-3';

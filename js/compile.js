@@ -4,12 +4,16 @@
 /**
  *
  * @param {string} htmlString
- * @return {Element}
+ * @return {DocumentFragment}
  */
 const getElementFromTemplate = (htmlString) => {
   let wrapper = document.createElement('div');
   wrapper.innerHTML = htmlString;
-  return wrapper;
+  let element = document.createDocumentFragment();
+  while (wrapper.childNodes.length) {
+    element.appendChild(wrapper.childNodes[0]);
+  }
+  return element;
 };
 
 export default getElementFromTemplate;

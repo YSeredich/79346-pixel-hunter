@@ -46,17 +46,24 @@ dataUnited.footerData = {
   ]
 };
 
+const ImageType = {
+  PAINT: 0,
+  PHOTO: 1
+};
+
 dataUnited.questions = [
   {
     gameType: 1,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PAINT
     }, {
       name: 'question2',
       alt: 'Option 2',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PHOTO
     }]
   },
   {
@@ -64,7 +71,8 @@ dataUnited.questions = [
     task: {
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/705x455'
+      src: 'http://placehold.it/705x455',
+      type: ImageType.PAINT
     }
   },
   {
@@ -72,15 +80,18 @@ dataUnited.questions = [
     tasks: [{
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PAINT
     }, {
       isSelected: true,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PHOTO
     }, {
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PAINT
     }]
   },
   {
@@ -88,11 +99,13 @@ dataUnited.questions = [
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PAINT
     }, {
       name: 'question2',
       alt: 'Option 2',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PHOTO
     }]
   },
   {
@@ -100,7 +113,8 @@ dataUnited.questions = [
     task: {
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/705x455'
+      src: 'http://placehold.it/705x455',
+      type: ImageType.PAINT
     }
   },
   {
@@ -108,15 +122,18 @@ dataUnited.questions = [
     tasks: [{
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PAINT
     }, {
       isSelected: true,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PHOTO
     }, {
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PAINT
     }]
   },
   {
@@ -124,11 +141,13 @@ dataUnited.questions = [
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PAINT
     }, {
       name: 'question2',
       alt: 'Option 2',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PHOTO
     }]
   },
   {
@@ -136,7 +155,8 @@ dataUnited.questions = [
     task: {
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/705x455'
+      src: 'http://placehold.it/705x455',
+      type: ImageType.PAINT
     }
   },
   {
@@ -144,15 +164,18 @@ dataUnited.questions = [
     tasks: [{
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PAINT
     }, {
       isSelected: true,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PHOTO
     }, {
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PAINT
     }]
   },
   {
@@ -160,11 +183,13 @@ dataUnited.questions = [
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PAINT
     }, {
       name: 'question2',
       alt: 'Option 2',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PHOTO
     }]
   }
 ];

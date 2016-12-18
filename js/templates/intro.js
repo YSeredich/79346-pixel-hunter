@@ -4,7 +4,7 @@
 import getElementFromTemplate from '../compile';
 import select from '../select';
 import greetingFunction from './greeting';
-import dataUnited from '../data';
+import dataUnited from '../data/game-data';
 
 const introFunction = (data) => {
   const introText = `<div class="intro"><h1 class="intro__asterisk">*</h1>

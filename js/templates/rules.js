@@ -5,7 +5,7 @@ import getElementFromTemplate from '../compile';
 import select from '../select';
 import back from './components/back';
 import gameScreenFunction from './game-screen';
-import dataUnited from '../data';
+import dataUnited from '../data/game-data';
 
 const rulesFunction = (data) => {
 
