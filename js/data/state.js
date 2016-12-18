@@ -120,5 +120,44 @@ export const getTime = ( resultTask ) => {
 };
 
 export const determineCorrect = ( resultTask ) => {
+  const answer = resultTask.answer;
+  const real = resultTask.realAnswer;
+  let isCorrect;
+  if ( answer.length === real.length ) {
+    isCorrect = answer.every( ( item, i ) => {
+      return Boolean( item === real[i] );
+    });
+  } else {
+    isCorrect = false;
+  }
+  return Object.assign({}, resultTask, {
+    isCorrect: isCorrect
+  });
 
+};
+
+export const getCorrectness = (resultTask) => {
+  return resultTask.isCorrect;
+};
+
+export const determineAnswerType = ( resultTask ) => {
+  let res;
+
+  if (resultTask.isCorrect === true) {
+
+    if (resultTask.time < 10) {
+      res = statsType.FAST;
+    } else if (resultTask.time > 20) {
+      res = statsType.SLOW;
+    } else {
+      res = statsType.CORRECT;
+    }
+  } else if ( resultTask.isCorrect === false ) {
+    res = statsType.WRONG;
+  } else {
+    res = statsType.UNKNOWN;
+  }
+  return Object.assign({}, resultTask, {
+    statsType: res
+  });
 };

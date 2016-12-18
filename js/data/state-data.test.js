@@ -2,7 +2,12 @@
  * Created by yulia on 12.12.2016.
  */
 import assert from 'assert';
-import {state, setLives, decreaseLives, getLives, setCurrent, getCurrent, increaseCurrent, setTime, getTime, determineCorrect} from './state';
+import {state,
+  setLives, decreaseLives, getLives,
+  setCurrent, getCurrent, increaseCurrent,
+  setTime, getTime,
+  determineCorrect, getCorrectness,
+  determineAnswerType} from './state';
 
 const testRound = state.round[0];
 const testResult = testRound.result[0];
@@ -10,6 +15,13 @@ const testResult = testRound.result[0];
 const ImageType = {
   PAINT: 0,
   PHOTO: 1
+};
+const statsType = {
+  WRONG: 0,
+  CORRECT: 1,
+  SLOW: 2,
+  FAST: 3,
+  UNKNOWN: 4
 };
 
 describe('Game state', () => {
@@ -150,27 +162,101 @@ describe('Game state', () => {
         it('determine a correct answer of first type game', () => {
           let test = Object.assign({}, testResult, {
             answer: [ImageType.PAINT, ImageType.PAINT],
-            realAnswer: [ImageType.PAINT, ImageType.PAINT],
-            taskType: 1
+            realAnswer: [ImageType.PAINT, ImageType.PAINT]
           });
-          assert.equal(determineCorrect( test ), true);
+          assert.equal(determineCorrect( test ).isCorrect, true);
         });
         it('determine a correct answer of second type game', () => {
           let test = Object.assign({}, testResult, {
-            answer: ImageType.PAINT,
-            realAnswer: ImageType.PHOTO,
-            taskType: 2
+            answer: [ImageType.PAINT],
+            realAnswer: [ImageType.PHOTO]
           });
-          assert.equal(determineCorrect( test ), true);
+          assert.equal(determineCorrect( test ).isCorrect, false);
         });
-        it('determine a correct answer of first type game', () => {
+        it('determine a correct answer of third type game', () => {
           let test = Object.assign({}, testResult, {
             answer: [ImageType.PAINT, ImageType.PAINT, ImageType.PHOTO],
-            realAnswer: [ImageType.PAINT, ImageType.PHOTO, ImageType.PAINT],
-            taskType: 3
+            realAnswer: [ImageType.PAINT, ImageType.PHOTO, ImageType.PAINT]
           });
-          assert.equal(determineCorrect( test ), false);
+          assert.equal(determineCorrect( test ).isCorrect, false);
         });
+        it('determine a correct answer if user did not answer', () => {
+          let test = Object.assign({}, testResult, {
+            answer: [],
+            realAnswer: [ImageType.PAINT, ImageType.PAINT]
+          });
+          assert.equal(determineCorrect( test ).isCorrect, false);
+        });
+        it('determine a correct answer if user answer 1 quest from 2', () => {
+          let test = Object.assign({}, testResult, {
+            answer: [ImageType.PAINT],
+            realAnswer: [ImageType.PAINT, ImageType.PAINT]
+          });
+          assert.equal(determineCorrect( test ).isCorrect, false);
+        });
+        it('are clean', () => {
+          let oldState = Object.assign({}, testResult );
+          determineCorrect(oldState);
+          assert.deepEqual( oldState, testResult );
+        });
+      });
+      describe('getCorrect', () => {
+        it('get correctness of user answer', () => {
+          const test = Object.assign({}, testResult, {
+            isCorrect: true
+          });
+          assert.equal( getCorrectness(test), true );
+        });
+      });
+    });
+
+    describe('Stats', () => {
+      describe('determineAnswerType', () => {
+        it('determine a correct answer type WRONG', () => {
+          let test = Object.assign({}, testResult, {
+            time: 20,
+            isCorrect: false,
+            statsType: null
+          });
+          assert.equal(determineAnswerType( test ).statsType, statsType.WRONG);
+        });
+        it('determine a correct answer type CORRECT', () => {
+          let test = Object.assign({}, testResult, {
+            time: 15,
+            isCorrect: true,
+            statsType: null
+          });
+          assert.equal(determineAnswerType( test ).statsType, statsType.CORRECT);
+        });
+        it('determine a correct answer type SLOW', () => {
+          let test = Object.assign({}, testResult, {
+            time: 25,
+            isCorrect: true,
+            statsType: null
+          });
+          assert.equal(determineAnswerType( test ).statsType, statsType.SLOW);
+        });
+        it('determine a correct answer type FAST', () => {
+          let test = Object.assign({}, testResult, {
+            time: 5,
+            isCorrect: true,
+            statsType: null
+          });
+          assert.equal(determineAnswerType( test ).statsType, statsType.FAST);
+        });
+        it('determine a correct answer type UNKNOWN', () => {
+          let test = Object.assign({}, testResult, {
+            isCorrect: null,
+            statsType: null
+          });
+          assert.equal(determineAnswerType( test ).statsType, statsType.UNKNOWN);
+        });
+        it('are clean', () => {
+          let oldState = Object.assign({}, testResult );
+          determineAnswerType(oldState);
+          assert.deepEqual( oldState, testResult );
+        });
+
       });
     });
   });
