@@ -36,9 +36,7 @@ export const setLives = (round, lives) => {
   }
 };
 
-export const getLives = (round) => {
-  return round.lives;
-};
+export const getLives = (round) => round.lives;
 
 export const decreaseLives = (round) => {
   if (round.lives < 1) {
@@ -58,9 +56,7 @@ export const setCurrent = (round, currentTask) => {
   }
 };
 
-export const getCurrent = (round) => {
-  return round.currentTask;
-};
+export const getCurrent = (round) => round.currentTask;
 
 export const increaseCurrent = (round) => {
   if (round.currentTask === 9) {
@@ -99,9 +95,7 @@ export const determineCorrect = (resultTask) => {
 
 };
 
-export const getCorrectness = (resultTask) => {
-  return resultTask.isCorrect;
-};
+export const getCorrectness = (resultTask) => resultTask.isCorrect;
 
 export const determineAnswerType = (resultTask) => {
   let res;
@@ -125,9 +119,7 @@ export const determineAnswerType = (resultTask) => {
   });
 };
 
-export const getAnswerType = (resultTask) => {
-  return resultTask.statsType;
-};
+export const getAnswerType = (resultTask) => resultTask.statsType;
 
 export const countTotal = (round) => {
   let total;
@@ -166,12 +158,8 @@ export const countTotal = (round) => {
   return Object.assign({}, round, total);
 };
 
-export const setUserAnswer = (resultTask, answer) => {
-  return Object.assign({}, resultTask, {answer});
-};
+export const setUserAnswer = (resultTask, answer) => Object.assign({}, resultTask, {answer});
 
-export const setRealAnswer = (resultTask, realAnswer) => {
-  return Object.assign({}, resultTask, {realAnswer});
-};
+export const setRealAnswer = (resultTask, realAnswer) => Object.assign({}, resultTask, {realAnswer});
 
 
