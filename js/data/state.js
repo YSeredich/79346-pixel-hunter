@@ -12,15 +12,19 @@ export const statsType = {
   FAST: 3,
   UNKNOWN: 4
 };
+export const prices = {
+  CORRECT: 100,
+  BONUS: 50,
+  FINE: -50
+};
 
-export let state = {
+export let initialState = {
   round: [
     {
       currentTask: 0,
       lives: 3,
       result: []
     }
-
   ]
 };
 
@@ -103,7 +107,7 @@ export const determineCorrect = ( resultTask ) => {
 
 };
 
-export const getCorrectness = (resultTask) => {
+export const getCorrectness = ( resultTask ) => {
   return resultTask.isCorrect;
 };
 
@@ -128,3 +132,58 @@ export const determineAnswerType = ( resultTask ) => {
     statsType: res
   });
 };
+
+export const getAnswerType = ( resultTask ) => {
+  return resultTask.statsType;
+};
+
+export const countTotal = ( round ) => {
+  let total;
+  if ( round.isWin === true ) {
+    let correct = 0;
+    let bonuses = round.lives;
+    let fines = 0;
+    const result = round.result;
+
+    result.forEach( ( item ) => {
+      if (item.isCorrect === true) {
+        correct += 1;
+      }
+      if ( item.statsType === statsType.SLOW ) {
+        fines += 1;
+      } else if ( item.statsType === statsType.FAST ) {
+        bonuses += 1;
+      }
+    });
+
+    total = {
+      totalPoints: correct * prices.CORRECT + bonuses * prices.BONUS + fines * prices.FINE,
+      fastBonuses: bonuses - round.lives,
+      livesBonuses: round.lives,
+      slowFine: fines
+    };
+
+  } else {
+    total = {
+      totalPoints: 0,
+      fastBonuses: 0,
+      livesBonuses: 0,
+      slowFine: 0
+    };
+  }
+  return Object.assign({}, round, total);
+};
+
+export const setUserAnswer = ( resultTask, arr ) => {
+  return Object.assign({}, resultTask, {
+    answer: arr
+  });
+};
+
+export const setRealAnswer = ( resultTask, arr ) => {
+  return Object.assign({}, resultTask, {
+    realAnswer: arr
+  });
+};
+
+

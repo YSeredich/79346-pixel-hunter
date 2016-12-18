@@ -7,13 +7,14 @@ import {ImageType, statsType,
   setCurrent, getCurrent, increaseCurrent,
   setTime, getTime,
   determineCorrect, getCorrectness,
-  determineAnswerType} from './state';
+  determineAnswerType, getAnswerType,
+  countTotal, setUserAnswer, setRealAnswer} from './state';
 
 const testState = {
   round: [
     {
       currentTask: 5,
-      lives: 1,
+      lives: 2,
       result: [
         {
           time: 23,
@@ -85,10 +86,18 @@ const testState = {
           isCorrect: false,
           statsType: statsType.WRONG
         }
-      ]
+      ],
+
+      isWin: true,
+      totalPoints: null,
+      fastBonuses: null,
+      livesBonuses: null,
+      slowFine: null
+
     }
   ]
 };
+
 const testRound = testState.round[0];
 const testResult = testRound.result[0];
 
@@ -188,6 +197,34 @@ describe('Game state', () => {
         assert.throws(() => {
           increaseCurrent( test );
         });
+      });
+    });
+  });
+
+  describe('Total', () => {
+    describe('countTotal', () => {
+      it('counts total points', () => {
+        assert.equal( countTotal(testRound).totalPoints, 750);
+      });
+      it('counts total lives bonuses', () => {
+        assert.equal( countTotal(testRound).livesBonuses, 2);
+      });
+      it('counts total fast bonuses', () => {
+        assert.equal( countTotal(testRound).fastBonuses, 2);
+      });
+      it('counts total fines', () => {
+        assert.equal( countTotal(testRound).slowFine, 3);
+      });
+      it('counts total if user fail', () => {
+        const test = Object.assign({}, testRound, {
+          isWin: false
+        });
+        assert.equal( countTotal(test).totalPoints, 0);
+      });
+      it('are clean', () => {
+        let oldState = Object.assign({}, testRound );
+        countTotal(oldState, 1);
+        assert.deepEqual( oldState, testRound );
       });
     });
   });
@@ -323,6 +360,38 @@ describe('Game state', () => {
           let oldState = Object.assign({}, testResult );
           determineAnswerType(oldState);
           assert.deepEqual( oldState, testResult );
+        });
+      });
+      describe('getAnswerType', () => {
+        it('get answer type', () => {
+          const test = Object.assign({}, testRound, {
+            statsType: statsType.WRONG
+          });
+          assert.equal( getAnswerType(test), statsType.WRONG );
+        });
+      });
+    });
+
+    describe('Answer', () => {
+      describe('setUserAnswer', () => {
+        it('sets user answer', () => {
+          assert.deepEqual( setUserAnswer(testResult, [ImageType.PAINT]).answer, [ImageType.PAINT] );
+        });
+        it('are clean', () => {
+          let oldState = Object.assign({}, testRound );
+          setUserAnswer(oldState, 1);
+          assert.deepEqual( oldState, testRound );
+        });
+      });
+
+      describe('setRealAnswer', () => {
+        it('sets real answer', () => {
+          assert.deepEqual( setRealAnswer(testResult, [ImageType.PHOTO, ImageType.PAINT]).realAnswer, [ImageType.PHOTO, ImageType.PAINT] );
+        });
+        it('are clean', () => {
+          let oldState = Object.assign({}, testRound );
+          setRealAnswer(oldState, 1);
+          assert.deepEqual( oldState, testRound );
         });
       });
     });
