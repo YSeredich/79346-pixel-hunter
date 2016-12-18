@@ -2,27 +2,95 @@
  * Created by yulia on 12.12.2016.
  */
 import assert from 'assert';
-import {state,
+import {ImageType, statsType,
   setLives, decreaseLives, getLives,
   setCurrent, getCurrent, increaseCurrent,
   setTime, getTime,
   determineCorrect, getCorrectness,
   determineAnswerType} from './state';
 
-const testRound = state.round[0];
+const testState = {
+  round: [
+    {
+      currentTask: 5,
+      lives: 1,
+      result: [
+        {
+          time: 23,
+          answer: [ImageType.PAINT, ImageType.PAINT],
+          realAnswer: [ImageType.PAINT, ImageType.PAINT],
+          isCorrect: true,
+          statsType: statsType.SLOW
+        },
+        {
+          time: 13,
+          answer: [ImageType.PAINT],
+          realAnswer: [ImageType.PHOTO],
+          isCorrect: false,
+          statsType: statsType.WRONG
+        },
+        {
+          time: 5,
+          answer: [ImageType.PAINT, ImageType.PHOTO, ImageType.PAINT],
+          realAnswer: [ImageType.PAINT, ImageType.PHOTO, ImageType.PAINT],
+          isCorrect: true,
+          statsType: statsType.FAST
+        },
+        {
+          time: 15,
+          answer: [ImageType.PAINT],
+          realAnswer: [ImageType.PAINT],
+          isCorrect: true,
+          statsType: statsType.CORRECT
+        },
+        {
+          time: 23,
+          answer: [ImageType.PAINT, ImageType.PAINT],
+          realAnswer: [ImageType.PAINT, ImageType.PAINT],
+          isCorrect: true,
+          statsType: statsType.SLOW
+        },
+        {
+          time: 13,
+          answer: [ImageType.PAINT],
+          realAnswer: [ImageType.PHOTO],
+          isCorrect: false,
+          statsType: statsType.WRONG
+        },
+        {
+          time: 5,
+          answer: [ImageType.PAINT, ImageType.PHOTO, ImageType.PAINT],
+          realAnswer: [ImageType.PAINT, ImageType.PHOTO, ImageType.PAINT],
+          isCorrect: true,
+          statsType: statsType.FAST
+        },
+        {
+          time: 15,
+          answer: [ImageType.PAINT],
+          realAnswer: [ImageType.PAINT],
+          isCorrect: true,
+          statsType: statsType.CORRECT
+        },
+        {
+          time: 23,
+          answer: [ImageType.PAINT, ImageType.PAINT],
+          realAnswer: [ImageType.PAINT, ImageType.PAINT],
+          isCorrect: true,
+          statsType: statsType.SLOW
+        },
+        {
+          time: 13,
+          answer: [ImageType.PAINT],
+          realAnswer: [ImageType.PHOTO],
+          isCorrect: false,
+          statsType: statsType.WRONG
+        }
+      ]
+    }
+  ]
+};
+const testRound = testState.round[0];
 const testResult = testRound.result[0];
-
-const ImageType = {
-  PAINT: 0,
-  PHOTO: 1
-};
-const statsType = {
-  WRONG: 0,
-  CORRECT: 1,
-  SLOW: 2,
-  FAST: 3,
-  UNKNOWN: 4
-};
 
 describe('Game state', () => {
 
@@ -256,7 +324,6 @@ describe('Game state', () => {
           determineAnswerType(oldState);
           assert.deepEqual( oldState, testResult );
         });
-
       });
     });
   });

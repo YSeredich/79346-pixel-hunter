@@ -1,15 +1,11 @@
 /**
  * Created by yulia on 12.12.2016.
  */
-
-import dataUnited from './game-data';
-
-const ImageType = {
+export const ImageType = {
   PAINT: 0,
   PHOTO: 1
 };
-
-const statsType = {
+export const statsType = {
   WRONG: 0,
   CORRECT: 1,
   SLOW: 2,
@@ -20,40 +16,11 @@ const statsType = {
 export let state = {
   round: [
     {
-      currentTask: 5,
-      lives: 2,
-      quest: dataUnited.questions,
-      result: [
-        {
-          time: 23,
-          answer: [ImageType.PAINT, ImageType.PAINT],
-          realAnswer: [ImageType.PAINT, ImageType.PAINT],
-          taskType: 1,
-          isCorrect: true,
-          statsType: statsType.WRONG
-        },
-        {
-          time: 13,
-          isCorrect: false
-        },
-        {
-          time: 20,
-          isCorrect: false
-        },
-        {
-          time: 23,
-          isCorrect: true
-        },
-        {
-          time: 13,
-          isCorrect: true
-        },
-        {
-          time: 20,
-          isCorrect: true
-        }
-      ]
+      currentTask: 0,
+      lives: 3,
+      result: []
     }
+
   ]
 };
 
