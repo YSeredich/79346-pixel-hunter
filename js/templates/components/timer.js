@@ -37,5 +37,6 @@ export const timerObject = {
     if (this.timeoutId !== null) {
       clearTimeout(this.timeoutId);
     }
+    this.callback = null;
   }
 };

@@ -1,28 +1,17 @@
 /**
  * Created by yulia on 12.12.2016.
  */
-export const ImageType = {
-  PAINT: 0,
-  PHOTO: 1
-};
-export const statsType = {
-  WRONG: 0,
-  CORRECT: 1,
-  SLOW: 2,
-  FAST: 3,
-  UNKNOWN: 4
-};
-export const prices = {
-  CORRECT: 100,
-  BONUS: 50,
-  FINE: -50
-};
+import {statsType, prices} from './game-data';
+import dataUnited from './game-data';
 
-export let initialState = {
-  round: [
+export let state = {
+  currentRound: 0,
+  rounds: [
     {
+      questions: dataUnited.questions,
       currentTask: 0,
       lives: 3,
+      stats: [],
       result: []
     }
   ]
@@ -39,7 +28,7 @@ export const setLives = (round, lives) => {
 export const getLives = (round) => round.lives;
 
 export const decreaseLives = (round) => {
-  if (round.lives < 1) {
+  if (round.lives < 0) {
     throw new RangeError('You have an irreducible number of lives');
   } else {
     return Object.assign({}, round, {
@@ -49,7 +38,7 @@ export const decreaseLives = (round) => {
 };
 
 export const setCurrent = (round, currentTask) => {
-  if (currentTask < 0 || currentTask > 9) {
+  if (currentTask < 0 || currentTask > 10) {
     throw new RangeError('This number cant be number of current task');
   } else {
     return Object.assign({}, round, {currentTask});
@@ -102,9 +91,9 @@ export const determineAnswerType = (resultTask) => {
 
   if (resultTask.isCorrect === true) {
 
-    if (resultTask.time < 10) {
+    if (resultTask.time > 20) {
       res = statsType.FAST;
-    } else if (resultTask.time > 20) {
+    } else if (resultTask.time < 10) {
       res = statsType.SLOW;
     } else {
       res = statsType.CORRECT;
@@ -121,45 +110,97 @@ export const determineAnswerType = (resultTask) => {
 
 export const getAnswerType = (resultTask) => resultTask.statsType;
 
-export const countTotal = (round) => {
+export const countTotal = (momentState) => {
+  let round = momentState.rounds[momentState.currentRound];
+  const result = round.result;
+
+  let correct = 0;
+  let wrong = 0;
+  let fastBonuses = 0;
+  let livesBonuses = (round.lives > 0 ? round.lives : 0);
+  let fines = 0;
+
+  result.forEach((item) => {
+    if (item.isCorrect === true) {
+      correct += 1;
+    } else {
+      wrong += 1;
+    }
+    if (item.statsType === statsType.SLOW) {
+      fines += 1;
+    } else if (item.statsType === statsType.FAST) {
+      fastBonuses += 1;
+    }
+  });
+
+  let isWin = Boolean(wrong < 4);
+
   let total;
-  if (round.isWin === true) {
-    let correct = 0;
-    let bonuses = round.lives;
-    let fines = 0;
-    const result = round.result;
-
-    result.forEach((item) => {
-      if (item.isCorrect === true) {
-        correct += 1;
-      }
-      if (item.statsType === statsType.SLOW) {
-        fines += 1;
-      } else if (item.statsType === statsType.FAST) {
-        bonuses += 1;
-      }
-    });
-
+  if (isWin === true) {
     total = {
-      totalPoints: correct * prices.CORRECT + bonuses * prices.BONUS + fines * prices.FINE,
-      fastBonuses: bonuses - round.lives,
+      isWin: isWin,
+      totalPoints: correct * prices.CORRECT + (livesBonuses + fastBonuses) * prices.BONUS + fines * prices.FINE,
+      fastBonuses: fastBonuses,
       livesBonuses: round.lives,
       slowFine: fines
     };
-
   } else {
     total = {
+      isWin: isWin,
       totalPoints: 0,
       fastBonuses: 0,
       livesBonuses: 0,
       slowFine: 0
     };
   }
-  return Object.assign({}, round, total);
+  let res = Object.assign({}, round, total);
+  let rounds = momentState.rounds.slice();
+  rounds[momentState.currentRound] = res;
+  return Object.assign({}, momentState, {rounds});
 };
 
 export const setUserAnswer = (resultTask, answer) => Object.assign({}, resultTask, {answer});
 
 export const setRealAnswer = (resultTask, realAnswer) => Object.assign({}, resultTask, {realAnswer});
+
+export const setStats = (round, value) => {
+  let newStats = round.stats.slice();
+  newStats[round.currentTask] = value;
+  return Object.assign({}, round, {
+    stats: newStats
+  });
+};
+
+export const setResult = (momentState, answer, time) => {
+  const currentRoundNum = momentState.currentRound;
+  const round = momentState.rounds[currentRoundNum];
+  const currentTaskNum = getCurrent(round);
+
+  let resultTask = setUserAnswer({}, answer);
+  const currentQuestion = round.questions[currentTaskNum].tasks;
+  const realAnswer = currentQuestion.map((item) => {
+    return item.type;
+  });
+  resultTask = setRealAnswer(resultTask, realAnswer);
+  resultTask = setTime(resultTask, time);
+  resultTask = determineCorrect(resultTask);
+  resultTask = determineAnswerType(resultTask);
+
+  let res = setStats(round, resultTask.statsType);
+  if (!getCorrectness(resultTask)) {
+    res = decreaseLives(res);
+  }
+  res = setCurrent(res, currentTaskNum + 1);
+  res.result[currentTaskNum] = resultTask;
+
+  let rounds = momentState.rounds.slice();
+  rounds[momentState.currentRound] = res;
+  return Object.assign({}, momentState, {rounds});
+};
+
+export const updateState = (oldState, newState) => {
+  oldState.currentRound = newState.currentRound;
+  oldState.rounds = newState.rounds;
+};
 
 

@@ -2,8 +2,10 @@
  * Created by yulia on 12.12.2016.
  */
 import assert from 'assert';
-import {ImageType,
-  statsType,
+import dataUnited from './game-data';
+import {ImageType, statsType} from '../data/game-data';
+import {timerObject} from '../templates/components/timer';
+import {
   setLives,
   decreaseLives,
   getLives,
@@ -18,13 +20,19 @@ import {ImageType,
   getAnswerType,
   countTotal,
   setUserAnswer,
-  setRealAnswer} from './state';
+  setRealAnswer,
+  setStats,
+  setResult
+} from './state';
 
 const testState = {
-  round: [
+  currentRound: 0,
+  rounds: [
     {
+      questions: dataUnited.questions,
       currentTask: 5,
       lives: 2,
+      stats: [statsType.CORRECT, statsType.SLOW],
       result: [
         {
           time: 23,
@@ -103,13 +111,13 @@ const testState = {
       fastBonuses: null,
       livesBonuses: null,
       slowFine: null
-
     }
   ]
 };
-
-const testRound = testState.round[0];
+const testRound = testState.rounds[0];
 const testResult = testRound.result[0];
+const testTimer = timerObject;
+testTimer.currentTime = 23;
 
 describe('Game state', () => {
 
@@ -153,11 +161,26 @@ describe('Game state', () => {
       });
       it('decreaseLives throws an error if it cant be decreased', () => {
         const test = Object.assign({}, testRound, {
-          lives: 0
+          lives: -1
         });
         assert.throws(() => {
           decreaseLives(test);
         });
+      });
+    });
+  });
+
+  describe('Stats', () => {
+    describe('setStats', () => {
+      it('push new value of stats', () => {
+        const test = setStats(testRound, statsType.WRONG);
+        const length = test.stats.length;
+        assert.equal(test.stats[length - 1], statsType.WRONG);
+      });
+      it('are clean', () => {
+        let oldState = Object.assign({}, testRound);
+        setStats(oldState, statsType.WRONG);
+        assert.deepEqual(oldState, testRound);
       });
     });
   });
@@ -214,27 +237,21 @@ describe('Game state', () => {
   describe('Total', () => {
     describe('countTotal', () => {
       it('counts total points', () => {
-        assert.equal(countTotal(testRound).totalPoints, 750);
+        assert.equal(countTotal(testState).rounds[0].totalPoints, 750);
       });
       it('counts total lives bonuses', () => {
-        assert.equal(countTotal(testRound).livesBonuses, 2);
+        assert.equal(countTotal(testState).rounds[0].livesBonuses, 2);
       });
       it('counts total fast bonuses', () => {
-        assert.equal(countTotal(testRound).fastBonuses, 2);
+        assert.equal(countTotal(testState).rounds[0].fastBonuses, 2);
       });
       it('counts total fines', () => {
-        assert.equal(countTotal(testRound).slowFine, 3);
-      });
-      it('counts total if user fail', () => {
-        const test = Object.assign({}, testRound, {
-          isWin: false
-        });
-        assert.equal(countTotal(test).totalPoints, 0);
+        assert.equal(countTotal(testState).rounds[0].slowFine, 3);
       });
       it('are clean', () => {
-        let oldState = Object.assign({}, testRound);
+        let oldState = Object.assign({}, testState);
         countTotal(oldState, 1);
-        assert.deepEqual(oldState, testRound);
+        assert.deepEqual(oldState, testState);
       });
     });
   });
@@ -345,7 +362,7 @@ describe('Game state', () => {
         });
         it('determine a correct answer type SLOW', () => {
           let test = Object.assign({}, testResult, {
-            time: 25,
+            time: 5,
             isCorrect: true,
             statsType: null
           });
@@ -353,7 +370,7 @@ describe('Game state', () => {
         });
         it('determine a correct answer type FAST', () => {
           let test = Object.assign({}, testResult, {
-            time: 5,
+            time: 25,
             isCorrect: true,
             statsType: null
           });
@@ -403,6 +420,13 @@ describe('Game state', () => {
           setRealAnswer(oldState, 1);
           assert.deepEqual(oldState, testRound);
         });
+      });
+    });
+
+    describe('setResult', () => {
+      it('set quest result', () => {
+        let current = testRound.currentTask;
+        assert.equal(setResult(testState, [ImageType.PAINT, ImageType.PAINT], 15).rounds[0].result[current].statsType, statsType.WRONG);
       });
     });
   });
