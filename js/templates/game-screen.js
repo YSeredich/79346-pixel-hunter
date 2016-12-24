@@ -53,28 +53,35 @@ const gameScreenFunction = () => {
         e.preventDefault();
         const gameAnswers = document.querySelectorAll('.game__answer');
         let firstAnswer = null;
-        let firstAnswerName;
         for (let i = 0; i < gameAnswers.length; i++) {
           if (gameAnswers[i].classList.contains('checked')) {
-            firstAnswer = gameAnswers[i].querySelector('input').value;
-            firstAnswerName = gameAnswers[i].querySelector('input').name;
+            firstAnswer = gameAnswers[i];
           }
         }
         if (firstAnswer) {
-          const secondAnswer = e.currentTarget.querySelector('input').value;
-          let answer;
-          answer = (firstAnswerName === 'question1') ? [firstAnswer, secondAnswer] : [secondAnswer, firstAnswer];
-          answer = answer.map((item) => {
-            if (item === 'photo') {
-              return ImageType.PHOTO;
-            } else if (item === 'paint') {
-              return ImageType.PAINT;
-            } else {
-              return null;
-            }
-          });
-          updateState(state, setResult(state, answer, timerObject.getTime()));
-          goToNextScreen();
+          let firstInput = firstAnswer.querySelector('input');
+          let currentInput = e.currentTarget.querySelector('input');
+          if (firstInput.name === currentInput.name) {
+            firstAnswer.classList.remove('checked');
+            firstInput.checked = false;
+            e.currentTarget.classList.add('checked');
+            currentInput.checked = true;
+          } else {
+            const secondAnswer = e.currentTarget.querySelector('input').value;
+            let answer;
+            answer = (firstInput.name === 'question1') ? [firstInput.value, secondAnswer] : [secondAnswer, firstInput.value];
+            answer = answer.map((item) => {
+              if (item === 'photo') {
+                return ImageType.PHOTO;
+              } else if (item === 'paint') {
+                return ImageType.PAINT;
+              } else {
+                return null;
+              }
+            });
+            updateState(state, setResult(state, answer, timerObject.getTime()));
+            goToNextScreen();
+          }
         } else {
           e.currentTarget.classList.add('checked');
           e.currentTarget.querySelector('input').checked = true;
