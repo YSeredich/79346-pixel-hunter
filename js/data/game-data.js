@@ -53,9 +53,15 @@ export const prices = {
   FINE: -50
 };
 
+export const gameType = {
+  GUESS_TWO_IMAGES: 0,
+  GUESS_ONE_IMAGE: 1,
+  FIND_PAINT: 2
+};
+
 dataUnited.questions = [
   {
-    gameType: 1,
+    gameType: gameType.GUESS_TWO_IMAGES,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
@@ -69,7 +75,7 @@ dataUnited.questions = [
     }]
   },
   {
-    gameType: 2,
+    gameType: gameType.GUESS_ONE_IMAGE,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
@@ -78,7 +84,7 @@ dataUnited.questions = [
     }]
   },
   {
-    gameType: 3,
+    gameType: gameType.FIND_PAINT,
     tasks: [{
       isSelected: false,
       alt: 'Option 1',
@@ -97,7 +103,7 @@ dataUnited.questions = [
     }]
   },
   {
-    gameType: 1,
+    gameType: gameType.GUESS_TWO_IMAGES,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
@@ -111,7 +117,7 @@ dataUnited.questions = [
     }]
   },
   {
-    gameType: 2,
+    gameType: gameType.GUESS_ONE_IMAGE,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
@@ -120,7 +126,7 @@ dataUnited.questions = [
     }]
   },
   {
-    gameType: 3,
+    gameType: gameType.FIND_PAINT,
     tasks: [{
       isSelected: false,
       alt: 'Option 1',
@@ -139,7 +145,7 @@ dataUnited.questions = [
     }]
   },
   {
-    gameType: 1,
+    gameType: gameType.GUESS_TWO_IMAGES,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
@@ -153,7 +159,7 @@ dataUnited.questions = [
     }]
   },
   {
-    gameType: 2,
+    gameType: gameType.GUESS_ONE_IMAGE,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
@@ -162,7 +168,7 @@ dataUnited.questions = [
     }]
   },
   {
-    gameType: 3,
+    gameType: gameType.FIND_PAINT,
     tasks: [{
       isSelected: false,
       alt: 'Option 1',
@@ -181,7 +187,7 @@ dataUnited.questions = [
     }]
   },
   {
-    gameType: 1,
+    gameType: gameType.GUESS_TWO_IMAGES,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',

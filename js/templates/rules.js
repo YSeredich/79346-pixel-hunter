@@ -4,9 +4,7 @@
 import getElementFromTemplate from '../compile';
 import select from '../select';
 import back from './components/back';
-import gameScreenFunction from './game-screen';
-import {goToNextScreen} from './game-screen';
-import {state, updateState, setResult} from '../data/state';
+import renderGameScreen from './game-screen';
 
 const rulesFunction = (data) => {
 
@@ -34,11 +32,7 @@ const rulesFunction = (data) => {
   };
   rulesForm.onsubmit = (e) => {
     e.preventDefault();
-    const _timerCallback = () => {
-      updateState(state, setResult(state, [], 0));
-      goToNextScreen();
-    };
-    select(gameScreenFunction(), true, _timerCallback);
+    select(renderGameScreen());
   };
 
   return rulesElement;

@@ -117,7 +117,7 @@ export const countTotal = (momentState) => {
   let correct = 0;
   let wrong = 0;
   let fastBonuses = 0;
-  let livesBonuses = (round.lives > 0 ? round.lives : 0);
+  let livesBonuses = round.lives > 0 ? round.lives : 0;
   let fines = 0;
 
   result.forEach((item) => {
@@ -133,12 +133,13 @@ export const countTotal = (momentState) => {
     }
   });
 
-  let isWin = Boolean(wrong < 4);
+  let isWin = wrong < 4;
 
   let total;
-  if (isWin === true) {
+  if (isWin) {
     total = {
       isWin: isWin,
+      isCorrect: correct,
       totalPoints: correct * prices.CORRECT + (livesBonuses + fastBonuses) * prices.BONUS + fines * prices.FINE,
       fastBonuses: fastBonuses,
       livesBonuses: round.lives,
@@ -147,6 +148,7 @@ export const countTotal = (momentState) => {
   } else {
     total = {
       isWin: isWin,
+      isCorrect: 0,
       totalPoints: 0,
       fastBonuses: 0,
       livesBonuses: 0,
@@ -176,15 +178,14 @@ export const setResult = (momentState, answer, time) => {
   const round = momentState.rounds[currentRoundNum];
   const currentTaskNum = getCurrent(round);
 
-  let resultTask = setUserAnswer({}, answer);
   const currentQuestion = round.questions[currentTaskNum].tasks;
   const realAnswer = currentQuestion.map((item) => {
     return item.type;
   });
-  resultTask = setRealAnswer(resultTask, realAnswer);
-  resultTask = setTime(resultTask, time);
-  resultTask = determineCorrect(resultTask);
-  resultTask = determineAnswerType(resultTask);
+  const resultWithAnswers = setRealAnswer(setUserAnswer({}, answer), realAnswer);
+
+  const resultWithTime = setTime(resultWithAnswers, time);
+  const resultTask = determineAnswerType(determineCorrect(resultWithTime));
 
   let res = setStats(round, resultTask.statsType);
   if (!getCorrectness(resultTask)) {

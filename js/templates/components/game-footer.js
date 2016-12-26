@@ -3,11 +3,11 @@
  */
 import {statsType} from '../../data/game-data';
 const statsItem = {
-  0: '<li class="stats__result stats__result--wrong"></li>',
-  1: '<li class="stats__result stats__result--correct"></li>',
-  2: '<li class="stats__result stats__result--slow"></li>',
-  3: '<li class="stats__result stats__result--fast"></li>',
-  4: '<li class="stats__result stats__result--unknown"></li>'
+  [statsType.WRONG]: '<li class="stats__result stats__result--wrong"></li>',
+  [statsType.CORRECT]: '<li class="stats__result stats__result--correct"></li>',
+  [statsType.SLOW]: '<li class="stats__result stats__result--slow"></li>',
+  [statsType.FAST]: '<li class="stats__result stats__result--fast"></li>',
+  [statsType.UNKNOWN]: '<li class="stats__result stats__result--unknown"></li>'
 };
 
 let stats = (data) => {

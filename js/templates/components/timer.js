@@ -5,13 +5,13 @@ const timer = '<h1 class="game__timer">30</h1>';
 export default timer;
 
 export const timerObject = {
-  currentTime: null,
   timeoutId: null,
+  currentTime: null,
   container: null,
   callback: null,
-  configure: function (sec, callback) {
-    this.container = document.querySelector('.game__timer');
+  configure: function (sec, container, callback) {
     this.currentTime = sec;
+    this.container = container;
     this.callback = callback;
     return this;
   },
@@ -19,19 +19,20 @@ export const timerObject = {
     return this.currentTime;
   },
   start: function () {
-    const _timer = () => {
-      this.currentTime--;
+    const _tick = () => {
       this.container.innerHTML = this.currentTime;
+      this.currentTime--;
 
       if (this.currentTime <= 0) {
         if (this.callback !== null) {
           this.callback();
         }
       } else {
-        this.timeoutId = setTimeout(_timer, 1000);
+        this.timeoutId = setTimeout(_tick, 1000);
       }
     };
-    this.timeoutId = setTimeout(_timer, 1000);
+
+    _tick();
   },
   stop: function () {
     if (this.timeoutId !== null) {

@@ -107,6 +107,7 @@ const testState = {
       ],
 
       isWin: true,
+      isCorrect: null,
       totalPoints: null,
       fastBonuses: null,
       livesBonuses: null,
