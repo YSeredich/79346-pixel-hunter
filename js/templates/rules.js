@@ -4,8 +4,7 @@
 import getElementFromTemplate from '../compile';
 import select from '../select';
 import back from './components/back';
-import gameScreenFunction from './game-screen';
-import dataUnited from '../data';
+import renderGameScreen from './game-screen';
 
 const rulesFunction = (data) => {
 
@@ -33,7 +32,7 @@ const rulesFunction = (data) => {
   };
   rulesForm.onsubmit = (e) => {
     e.preventDefault();
-    select(gameScreenFunction(dataUnited.headerData, dataUnited.questions[0], dataUnited.footerData, 0));
+    select(renderGameScreen());
   };
 
   return rulesElement;

@@ -34,137 +34,170 @@ dataUnited.rulesData = {
   buttonText: 'Go!'
 };
 
-dataUnited.headerData = {
-  full_lives: 2,
-  total_lives: 3
+export const ImageType = {
+  PAINT: 0,
+  PHOTO: 1
 };
 
-dataUnited.footerData = {
-  quest_count: 10,
-  passed: [
-    'WR', 'SL', 'FS', 'CR'
-  ]
+export const statsType = {
+  WRONG: 0,
+  CORRECT: 1,
+  SLOW: 2,
+  FAST: 3,
+  UNKNOWN: 4
+};
+
+export const prices = {
+  CORRECT: 100,
+  BONUS: 50,
+  FINE: -50
+};
+
+export const gameType = {
+  GUESS_TWO_IMAGES: 0,
+  GUESS_ONE_IMAGE: 1,
+  FIND_PAINT: 2
 };
 
 dataUnited.questions = [
   {
-    gameType: 1,
+    gameType: gameType.GUESS_TWO_IMAGES,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PAINT
     }, {
       name: 'question2',
       alt: 'Option 2',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PHOTO
     }]
   },
   {
-    gameType: 2,
-    task: {
+    gameType: gameType.GUESS_ONE_IMAGE,
+    tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/705x455'
-    }
+      src: 'http://placehold.it/705x455',
+      type: ImageType.PAINT
+    }]
   },
   {
-    gameType: 3,
+    gameType: gameType.FIND_PAINT,
     tasks: [{
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PHOTO
     }, {
       isSelected: true,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PHOTO
     }, {
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PAINT
     }]
   },
   {
-    gameType: 1,
+    gameType: gameType.GUESS_TWO_IMAGES,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PAINT
     }, {
       name: 'question2',
       alt: 'Option 2',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PHOTO
     }]
   },
   {
-    gameType: 2,
-    task: {
+    gameType: gameType.GUESS_ONE_IMAGE,
+    tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/705x455'
-    }
+      src: 'http://placehold.it/705x455',
+      type: ImageType.PAINT
+    }]
   },
   {
-    gameType: 3,
+    gameType: gameType.FIND_PAINT,
     tasks: [{
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PAINT
     }, {
       isSelected: true,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PHOTO
     }, {
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PHOTO
     }]
   },
   {
-    gameType: 1,
+    gameType: gameType.GUESS_TWO_IMAGES,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PAINT
     }, {
       name: 'question2',
       alt: 'Option 2',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PHOTO
     }]
   },
   {
-    gameType: 2,
-    task: {
+    gameType: gameType.GUESS_ONE_IMAGE,
+    tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/705x455'
-    }
+      src: 'http://placehold.it/705x455',
+      type: ImageType.PAINT
+    }]
   },
   {
-    gameType: 3,
+    gameType: gameType.FIND_PAINT,
     tasks: [{
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PHOTO
     }, {
       isSelected: true,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PAINT
     }, {
       isSelected: false,
       alt: 'Option 1',
-      src: 'http://placehold.it/304x455'
+      src: 'http://placehold.it/304x455',
+      type: ImageType.PHOTO
     }]
   },
   {
-    gameType: 1,
+    gameType: gameType.GUESS_TWO_IMAGES,
     tasks: [{
       name: 'question1',
       alt: 'Option 1',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PAINT
     }, {
       name: 'question2',
       alt: 'Option 2',
-      src: 'http://placehold.it/468x458'
+      src: 'http://placehold.it/468x458',
+      type: ImageType.PHOTO
     }]
   }
 ];
@@ -176,65 +209,11 @@ dataUnited.questionText = [
 ];
 
 dataUnited.statsData = {
-  title: 'Победа!',
-  total_result: '950',
-  games: [
-    {
-      number: 1,
-      quest_count: 10,
-      passed: [
-        'WR', 'SL', 'FS', 'CR', 'WR', 'UN', 'SL', 'UN', 'FS', 'UN'
-      ],
-      base_points: 100,
-      base_total: 900,
-      bonuses: {
-        fast: {
-          title: 'Бонус за скорость:',
-          count: 1,
-          points: 50,
-          total: 50
-        },
-        life: {
-          title: 'Бонус за жизни:',
-          count: 2,
-          points: 50,
-          total: 100
-        },
-        slow: {
-          title: 'Штраф за медлительность:',
-          count: 2,
-          points: 50,
-          total: -100
-        }
-      }
-    },
-    {
-      number: 2,
-      quest_count: 10,
-      passed: [
-        'WR', 'SL', 'FS', 'CR', 'WR', 'UN', 'SL', 'WR', 'FS', 'WR'
-      ],
-      total: '',
-      final: 'fail'
-    },
-    {
-      number: 3,
-      quest_count: 10,
-      passed: [
-        'WR', 'SL', 'FS', 'CR', 'WR', 'UN', 'SL', 'UN', 'FS', 'UN'
-      ],
-      base_points: 100,
-      base_total: 900,
-      bonuses: {
-        life: {
-          title: 'Бонус за жизни:',
-          count: 2,
-          points: 50,
-          total: 100
-        }
-      }
-    }
-  ]
+  titleWin: 'Победа!',
+  titleFail: 'FAIL',
+  speedBonusTitle: 'Бонус за скорость:',
+  lifeBonusTitle: 'Бонус за жизни:',
+  fineTitle: 'Штраф за медлительность:'
 };
 
 export default dataUnited;

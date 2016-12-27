@@ -11,7 +11,7 @@ const game2Function = (data, callback) => {
         ${action(task.name)}
       </div>`;
 
-  const gameText = `<form class="game__content  game__content--wide">${option(data.task)}</form>`;
+  const gameText = `<form class="game__content  game__content--wide">${option(data.tasks[0])}</form>`;
 
   let gameElement = getElementFromTemplate(gameText);
   let gameAnswers = gameElement.querySelectorAll('.game__answer');
