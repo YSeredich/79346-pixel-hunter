@@ -1,24 +1,26 @@
 /**
  * Created by yulia on 27.11.2016.
  */
-const timer = '<h1 class="game__timer">30</h1>';
-export default timer;
+class Timer {
+  constructor() {
+    this.currentTime = null;
+    this.callback = null;
+    this.timeoutId = null;
+    this.container = null;
+  }
 
-export const timerObject = {
-  timeoutId: null,
-  currentTime: null,
-  container: null,
-  callback: null,
-  configure: function (sec, container, callback) {
+  configure(sec, container, callback) {
     this.currentTime = sec;
     this.container = container;
     this.callback = callback;
     return this;
-  },
-  getTime: function () {
+  }
+
+  getTime() {
     return this.currentTime;
-  },
-  start: function () {
+  }
+
+  start() {
     const _tick = () => {
       this.container.innerHTML = this.currentTime;
       this.currentTime--;
@@ -33,11 +35,14 @@ export const timerObject = {
     };
 
     _tick();
-  },
-  stop: function () {
+  }
+  stop() {
     if (this.timeoutId !== null) {
       clearTimeout(this.timeoutId);
     }
     this.callback = null;
   }
-};
+}
+
+const timer = new Timer();
+export default timer;

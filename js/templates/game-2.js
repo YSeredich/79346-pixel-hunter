@@ -1,25 +1,29 @@
 /**
  * Created by yulia on 19.11.2016.
  */
-
-import action from './components/action';
-import getElementFromTemplate from '../compile';
-
-const game2Function = (data, callback) => {
-  const option = (task) => `<div class="game__option">
-        <img src="${task.src}" alt="${task.alt}" width="705" height="455">
-        ${action(task.name)}
-      </div>`;
-
-  const gameText = `<form class="game__content  game__content--wide">${option(data.tasks[0])}</form>`;
-
-  let gameElement = getElementFromTemplate(gameText);
-  let gameAnswers = gameElement.querySelectorAll('.game__answer');
-  for ( let i = 0; i < gameAnswers.length; i++) {
-    gameAnswers[i].onclick = callback;
+import AbstractView from '../abstractView';
+import ActionView from './components/action';
+export default class SecondTypeGame extends AbstractView {
+  constructor(data, callback) {
+    super();
+    this.data = data;
+    this.callback = callback;
   }
+  getMarkup() {
+    const option = (task) => {
+      const action = new ActionView(task.name);
+      return `<div class="game__option">
+        <img src="${task.src}" alt="${task.alt}" width="705" height="455">
+        ${action.getMarkup()}
+      </div>`;
+    };
 
-  return gameElement;
-};
-
-export default game2Function;
+    return `<form class="game__content  game__content--wide">${option(this.data.tasks[0])}</form>`;
+  }
+  bindHandlers() {
+    let gameAnswers = this.element.querySelectorAll('.game__answer');
+    for ( let i = 0; i < gameAnswers.length; i++) {
+      gameAnswers[i].onclick = this.callback;
+    }
+  }
+}

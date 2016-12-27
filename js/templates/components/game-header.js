@@ -1,14 +1,19 @@
 /**
  * Created by yulia on 27.11.2016.
  */
-import back from './back';
-import timer from './timer';
-import lives from './lives';
-import getElementFromTemplate from '../../compile';
+import BackView from './back';
+import LivesView from './lives';
+import AbstractView from '../../abstractView';
 
-const header = (numLives) => {
-  const headerText = `<header class="header">${back}${timer}${lives(numLives)}</header>`;
-  return getElementFromTemplate(headerText);
-};
+export default class GameHeaderView extends AbstractView {
+  constructor(numLives) {
+    super();
+    this.numLives = numLives;
+    this.back = new BackView();
+  }
 
-export default header;
+  getMarkup() {
+    const livesView = new LivesView(this.numLives);
+    return `<header class="header">${this.back.getMarkup()}<h1 class="game__timer">30</h1>${livesView.getMarkup()}</header>`;
+  }
+}

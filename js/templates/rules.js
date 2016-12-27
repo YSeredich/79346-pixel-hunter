@@ -1,14 +1,17 @@
 /**
  * Created by yulia on 19.11.2016.
  */
-import getElementFromTemplate from '../compile';
+import AbstractView from '../abstractView';
 import select from '../select';
-import back from './components/back';
+import BackView from './components/back';
 import renderGameScreen from './game-screen';
+import dataUnited from '../data/game-data';
 
-const rulesFunction = (data) => {
-
-  const rulesText = `<header class="header">${back}</header>
+class RulesView extends AbstractView {
+  getMarkup() {
+    const data = dataUnited.rulesData;
+    const back = new BackView();
+    return `<header class="header">${back.getMarkup()}</header>
 <div class="rules  central--none">
     <h1 class="rules__title">${data.title}</h1>
     <p class="rules__description">${data.text}</p>
@@ -17,25 +20,24 @@ const rulesFunction = (data) => {
       <button class="rules__button  continue" type="submit" disabled>${data.buttonText}</button>
     </form>
   </div>`;
+  }
+  bindHandlers() {
+    let rulesForm = this.element.querySelector('.rules__form');
+    let rulesSubmit = rulesForm.querySelector('.rules__button');
+    let rulesInput = rulesForm.querySelector('.rules__input');
 
-  let rulesElement = getElementFromTemplate(rulesText);
-  let rulesForm = rulesElement.querySelector('.rules__form');
-  let rulesSubmit = rulesForm.querySelector('.rules__button');
-  let rulesInput = rulesForm.querySelector('.rules__input');
+    rulesInput.oninput = (e) => {
+      if (rulesInput.value) {
+        rulesSubmit.removeAttribute('disabled');
+      } else {
+        rulesSubmit.setAttribute('disabled', '');
+      }
+    };
+    rulesForm.onsubmit = (e) => {
+      e.preventDefault();
+      select(renderGameScreen());
+    };
+  }
+}
 
-  rulesInput.oninput = (e) => {
-    if (rulesInput.value) {
-      rulesSubmit.removeAttribute('disabled');
-    } else {
-      rulesSubmit.setAttribute('disabled', '');
-    }
-  };
-  rulesForm.onsubmit = (e) => {
-    e.preventDefault();
-    select(renderGameScreen());
-  };
-
-  return rulesElement;
-};
-
-export default rulesFunction;
+export default () => new RulesView().element;

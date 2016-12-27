@@ -1,28 +1,27 @@
 /**
  * Created by yulia on 08.12.2016.
  */
-import header from './components/game-header';
-import stats from './components/game-footer';
+import GameHeaderView from './components/game-header';
+import AnswerStatsView from './components/answer-stats';
 import dataUnited from '../data/game-data';
 import {ImageType, gameType} from '../data/game-data';
-import game1Function from './game-1';
-import game2Function from './game-2';
-import game3Function from './game-3';
-import statsFunction from './stats';
-import getElementFromTemplate from '../compile';
+import FirstTypeGameView from './game-1';
+import SecondTypeGame from './game-2';
+import ThirdTypeGameView from './game-3';
+import createStats from './stats';
 import select from '../select';
-import {state, updateState, setResult, countTotal} from '../data/state';
-import {timerObject} from '../templates/components/timer';
+import state from '../data/state';
+import timer from '../templates/components/timer';
 
 const goToNextScreen = () => {
-  let round = state.rounds[state.currentRound];
+  let round = state.currentRound;
   const current = round.currentTask;
   if (round.lives < 0 || current >= 10) {
-    updateState(state, countTotal(state));
-    timerObject.stop();
-    select(statsFunction());
+    state.countTotal();
+    timer.stop();
+    select(createStats());
   } else {
-    timerObject.stop();
+    timer.stop();
     select(renderGameScreen());
   }
 };
@@ -57,7 +56,7 @@ const guessTwoImagesCallback = (e) => {
           return null;
         }
       });
-      updateState(state, setResult(state, answer, timerObject.getTime()));
+      state.setResult(answer, timer.getTime());
       goToNextScreen();
     }
   } else {
@@ -74,7 +73,7 @@ const guessOneImageCallback = (e) => {
   } else if (answer === 'paint') {
     answer = [ImageType.PAINT];
   }
-  updateState(state, setResult(state, answer, timerObject.getTime()));
+  state.setResult(answer, timer.getTime());
   goToNextScreen();
 };
 
@@ -89,45 +88,49 @@ const findPaintCallback = (e) => {
       answer.push(ImageType.PHOTO);
     }
   }
-  updateState(state, setResult(state, answer, timerObject.getTime()));
+  state.setResult(answer, timer.getTime());
   goToNextScreen();
 };
 
 const timeOverCallback = (e) => {
-  updateState(state, setResult(state, [], 0));
+  state.setResult([], 0);
   goToNextScreen();
 };
 
 const renderGameScreen = () => {
-  let round = state.rounds[state.currentRound];
+  let round = state.currentRound;
 
-  const headerEl = header(round.lives);
+  const header = new GameHeaderView(round.lives);
+  const headerEl = header.element;
 
-  const footerText = `<div class="stats">${stats(round.stats)}</div>`;
-  const footerEl = getElementFromTemplate(footerText);
+  const footerEl = document.createElement('div');
+  footerEl.classList.add('stats');
+  const answerStats = new AnswerStatsView(round.stats);
+  footerEl.appendChild(answerStats.element);
 
   const current = round.currentTask;
   const currentTask = round.questions[current];
 
-  let gameTask;
-  let gameFormEl;
+  let gameTaskEl = document.createElement('p');
+  gameTaskEl.classList.add('game__task');
+  let gameForm;
 
   switch (currentTask.gameType) {
     case gameType.GUESS_TWO_IMAGES:
-      gameTask = `<p class="game__task">${dataUnited.questionText[0]}</p>`;
-      gameFormEl = game1Function(currentTask, guessTwoImagesCallback);
+      gameTaskEl.innerHTML = dataUnited.questionText[0];
+      gameForm = new FirstTypeGameView(currentTask, guessTwoImagesCallback);
       break;
     case gameType.GUESS_ONE_IMAGE:
-      gameTask = `<p class="game__task">${dataUnited.questionText[1]}</p>`;
-      gameFormEl = game2Function(currentTask, guessOneImageCallback);
+      gameTaskEl.innerHTML = dataUnited.questionText[1];
+      gameForm = new SecondTypeGame(currentTask, guessOneImageCallback);
       break;
     case gameType.FIND_PAINT:
-      gameTask = `<p class="game__task">${dataUnited.questionText[2]}</p>`;
-      gameFormEl = game3Function(currentTask, findPaintCallback);
+      gameTaskEl.innerHTML = dataUnited.questionText[2];
+      gameForm = new ThirdTypeGameView(currentTask, findPaintCallback);
       break;
   }
 
-  const gameTaskEl = getElementFromTemplate(gameTask);
+  const gameFormEl = gameForm.element;
   const gameEl = document.createElement('div');
   gameEl.classList.add('game');
   gameEl.appendChild(gameTaskEl);
@@ -138,7 +141,7 @@ const renderGameScreen = () => {
   gameScreenElement.appendChild(headerEl);
   gameScreenElement.appendChild(gameEl);
 
-  timerObject.configure(30, gameScreenElement.querySelector('.game__timer'), timeOverCallback).start();
+  timer.configure(30, gameScreenElement.querySelector('.game__timer'), timeOverCallback).start();
   return gameScreenElement;
 };
 

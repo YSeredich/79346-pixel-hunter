@@ -4,7 +4,7 @@
 import assert from 'assert';
 import dataUnited from './game-data';
 import {ImageType, statsType} from '../data/game-data';
-import {timerObject} from '../templates/components/timer';
+import timer from '../templates/components/timer';
 import {
   setLives,
   decreaseLives,
@@ -26,7 +26,7 @@ import {
 } from './state';
 
 const testState = {
-  currentRound: 0,
+  currentRoundID: 0,
   rounds: [
     {
       questions: dataUnited.questions,
@@ -117,7 +117,7 @@ const testState = {
 };
 const testRound = testState.rounds[0];
 const testResult = testRound.result[0];
-const testTimer = timerObject;
+const testTimer = timer;
 testTimer.currentTime = 23;
 
 describe('Game state', () => {

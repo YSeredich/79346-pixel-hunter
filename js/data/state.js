@@ -4,8 +4,8 @@
 import {statsType, prices} from './game-data';
 import dataUnited from './game-data';
 
-export let state = {
-  currentRound: 0,
+const initialState = {
+  currentRoundID: 0,
   rounds: [
     {
       questions: dataUnited.questions,
@@ -110,8 +110,46 @@ export const determineAnswerType = (resultTask) => {
 
 export const getAnswerType = (resultTask) => resultTask.statsType;
 
+export const setUserAnswer = (resultTask, answer) => Object.assign({}, resultTask, {answer});
+
+export const setRealAnswer = (resultTask, realAnswer) => Object.assign({}, resultTask, {realAnswer});
+
+export const setStats = (round, value) => {
+  let newStats = round.stats.slice();
+  newStats[round.currentTask] = value;
+  return Object.assign({}, round, {
+    stats: newStats
+  });
+};
+
+export const setResult = (momentState, answer, time) => {
+  const currentRoundNum = momentState.currentRoundID;
+  const round = momentState.rounds[currentRoundNum];
+  const currentTaskNum = getCurrent(round);
+
+  const currentQuestion = round.questions[currentTaskNum].tasks;
+  const realAnswer = currentQuestion.map((item) => {
+    return item.type;
+  });
+  const resultWithAnswers = setRealAnswer(setUserAnswer({}, answer), realAnswer);
+
+  const resultWithTime = setTime(resultWithAnswers, time);
+  const resultTask = determineAnswerType(determineCorrect(resultWithTime));
+
+  let res = setStats(round, resultTask.statsType);
+  if (!getCorrectness(resultTask)) {
+    res = decreaseLives(res);
+  }
+  res = setCurrent(res, currentTaskNum + 1);
+  res.result[currentTaskNum] = resultTask;
+
+  let rounds = momentState.rounds.slice();
+  rounds[momentState.currentRoundID] = res;
+  return Object.assign({}, momentState, {rounds});
+};
+
 export const countTotal = (momentState) => {
-  let round = momentState.rounds[momentState.currentRound];
+  let round = momentState.rounds[momentState.currentRoundID];
   const result = round.result;
 
   let correct = 0;
@@ -157,51 +195,26 @@ export const countTotal = (momentState) => {
   }
   let res = Object.assign({}, round, total);
   let rounds = momentState.rounds.slice();
-  rounds[momentState.currentRound] = res;
+  rounds[momentState.currentRoundID] = res;
   return Object.assign({}, momentState, {rounds});
 };
 
-export const setUserAnswer = (resultTask, answer) => Object.assign({}, resultTask, {answer});
-
-export const setRealAnswer = (resultTask, realAnswer) => Object.assign({}, resultTask, {realAnswer});
-
-export const setStats = (round, value) => {
-  let newStats = round.stats.slice();
-  newStats[round.currentTask] = value;
-  return Object.assign({}, round, {
-    stats: newStats
-  });
-};
-
-export const setResult = (momentState, answer, time) => {
-  const currentRoundNum = momentState.currentRound;
-  const round = momentState.rounds[currentRoundNum];
-  const currentTaskNum = getCurrent(round);
-
-  const currentQuestion = round.questions[currentTaskNum].tasks;
-  const realAnswer = currentQuestion.map((item) => {
-    return item.type;
-  });
-  const resultWithAnswers = setRealAnswer(setUserAnswer({}, answer), realAnswer);
-
-  const resultWithTime = setTime(resultWithAnswers, time);
-  const resultTask = determineAnswerType(determineCorrect(resultWithTime));
-
-  let res = setStats(round, resultTask.statsType);
-  if (!getCorrectness(resultTask)) {
-    res = decreaseLives(res);
+class State {
+  constructor(state = initialState) {
+    this._state = state;
   }
-  res = setCurrent(res, currentTaskNum + 1);
-  res.result[currentTaskNum] = resultTask;
+  get currentRound() {
+    return this._state.rounds[this._state.currentRoundID];
+  }
+  setResult(answer, time) {
+    this._state = setResult(this._state, answer, time);
+  }
+  countTotal() {
+    this._state = countTotal(this._state);
+  }
+}
 
-  let rounds = momentState.rounds.slice();
-  rounds[momentState.currentRound] = res;
-  return Object.assign({}, momentState, {rounds});
-};
-
-export const updateState = (oldState, newState) => {
-  oldState.currentRound = newState.currentRound;
-  oldState.rounds = newState.rounds;
-};
+const state = new State();
+export default state;
 
 
