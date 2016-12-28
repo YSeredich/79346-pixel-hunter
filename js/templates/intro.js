@@ -2,8 +2,7 @@
  * Created by yulia on 19.11.2016.
  */
 import AbstractView from '../abstractView';
-import select from '../select';
-import createGreeting from './greeting';
+import Application from '../application';
 import dataUnited from '../data/game-data';
 
 class IntroView extends AbstractView {
@@ -14,7 +13,7 @@ class IntroView extends AbstractView {
   bindHandlers() {
     this.element.querySelector('.intro__asterisk').onclick = (e) => {
       e.preventDefault();
-      select(createGreeting());
+      Application.showGreeting();
     };
   }
 }

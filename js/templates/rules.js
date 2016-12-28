@@ -2,9 +2,8 @@
  * Created by yulia on 19.11.2016.
  */
 import AbstractView from '../abstractView';
-import select from '../select';
+import Application from '../application';
 import BackView from './components/back';
-import Game from './game-screen';
 import dataUnited from '../data/game-data';
 
 class RulesView extends AbstractView {
@@ -35,7 +34,7 @@ class RulesView extends AbstractView {
     };
     rulesForm.onsubmit = (e) => {
       e.preventDefault();
-      select(new Game().startLevel());
+      Application.showGame();
     };
   }
 }

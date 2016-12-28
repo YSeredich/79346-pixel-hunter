@@ -8,8 +8,7 @@ import {ImageType, gameType} from '../data/game-data';
 import FirstTypeGameView from './game-1';
 import SecondTypeGame from './game-2';
 import ThirdTypeGameView from './game-3';
-import createStats from './stats';
-import select from '../select';
+import Application from '../application';
 import state from '../data/state';
 import timer from '../templates/components/timer';
 
@@ -152,9 +151,9 @@ export default class GamePresenter {
     const current = round.currentTask;
     if (round.lives < 0 || current >= 10) {
       state.countTotal();
-      select(createStats());
+      Application.showResults();
     } else {
-      select(new GamePresenter().startLevel());
+      Application.showGame();
     }
   }
 

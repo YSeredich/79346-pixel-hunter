@@ -2,8 +2,7 @@
  * Created by yulia on 19.11.2016.
  */
 import AbstractView from '../abstractView';
-import select from '../select';
-import createRules from './rules';
+import Application from '../application';
 import dataUnited from '../data/game-data';
 
 class GreetingView extends AbstractView {
@@ -22,7 +21,7 @@ class GreetingView extends AbstractView {
   bindHandlers() {
     this.element.querySelector('.greeting__continue').onclick = (e) => {
       e.preventDefault();
-      select(createRules());
+      Application.showRules();
     };
   }
 }
