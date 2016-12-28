@@ -4,7 +4,7 @@
 import AbstractView from '../abstractView';
 import select from '../select';
 import BackView from './components/back';
-import renderGameScreen from './game-screen';
+import Game from './game-screen';
 import dataUnited from '../data/game-data';
 
 class RulesView extends AbstractView {
@@ -35,7 +35,7 @@ class RulesView extends AbstractView {
     };
     rulesForm.onsubmit = (e) => {
       e.preventDefault();
-      select(renderGameScreen());
+      select(new Game().startLevel());
     };
   }
 }

@@ -202,11 +202,11 @@ dataUnited.questions = [
   }
 ];
 
-dataUnited.questionText = [
-  'Угадайте для каждого изображения фото или рисунок?',
-  'Угадай, фото или рисунок?',
-  'Найдите рисунок среди изображений'
-];
+dataUnited.questionText = {
+  [gameType.GUESS_TWO_IMAGES]: 'Угадайте для каждого изображения фото или рисунок?',
+  [gameType.GUESS_ONE_IMAGE]: 'Угадай, фото или рисунок?',
+  [gameType.FIND_PAINT]: 'Найдите рисунок среди изображений'
+};
 
 dataUnited.statsData = {
   titleWin: 'Победа!',
