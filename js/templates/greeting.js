@@ -5,7 +5,14 @@ import AbstractView from '../abstractView';
 import Application from '../application';
 import dataUnited from '../data/game-data';
 
-class GreetingView extends AbstractView {
+export default class GreetingView extends AbstractView {
+  constructor() {
+    super();
+    this.callback = (e) => {
+      e.preventDefault();
+      Application.showRules();
+    }
+  }
   getMarkup() {
     const data = dataUnited.greetingData;
     return `<div class="greeting  central--blur">
@@ -19,11 +26,7 @@ class GreetingView extends AbstractView {
   </div>`;
   }
   bindHandlers() {
-    this.element.querySelector('.greeting__continue').onclick = (e) => {
-      e.preventDefault();
-      Application.showRules();
-    };
+    this.actionElements = this.element.querySelectorAll('.greeting__continue');
+    super.bindHandlers();
   }
 }
-
-export default () => new GreetingView().element;

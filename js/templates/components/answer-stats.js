@@ -4,10 +4,6 @@
 import {statsType} from '../../data/game-data';
 import AbstractView from '../../abstractView';
 export default class AnswerStatsView extends AbstractView {
-  constructor(data) {
-    super();
-    this.data = data;
-  }
   getMarkup() {
     const statsItem = {
       [statsType.WRONG]: '<li class="stats__result stats__result--wrong"></li>',

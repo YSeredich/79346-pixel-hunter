@@ -1,9 +1,9 @@
 /**
  * Created by yulia on 28.12.2016.
  */
-import createIntro from './templates/intro';
-import createGreeting from './templates/greeting';
-import createRules from './templates/rules';
+import Intro from './templates/intro';
+import Greeting from './templates/greeting';
+import Rules from './templates/rules';
 import Game from './templates/game-screen';
 import createResults from './templates/stats';
 
@@ -17,15 +17,24 @@ const changeView = (slide) => {
 
 export default class Application {
   static showIntro() {
-    changeView(createIntro());
+    this.currentView = new Intro();
+    changeView(this.currentView.element);
   }
   static showGreeting() {
-    changeView(createGreeting());
+    this.currentView.clearHandlers();
+    this.currentView = new Greeting();
+    changeView(this.currentView.element);
   }
   static showRules() {
-    changeView(createRules());
+    this.currentView.clearHandlers();
+    this.currentView = new Rules();
+    changeView(this.currentView.element);
   }
   static showGame() {
+    if(this.currentView) {
+      this.currentView.clearHandlers();
+    }
+    this.currentView = null;
     changeView(new Game().startLevel());
   }
   static showResults() {
