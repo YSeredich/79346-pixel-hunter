@@ -4,11 +4,6 @@
 import AbstractView from '../abstractView';
 import ActionView from './components/action';
 export default class FirstTypeGameView extends AbstractView {
-  constructor(data, callback) {
-    super();
-    this.data = data;
-    this.callback = callback;
-  }
   getMarkup() {
     const options = (tasks) => {
       const _callback = (item) => {
@@ -24,10 +19,9 @@ export default class FirstTypeGameView extends AbstractView {
 
     return `<form class="game__content">${options(this.data.tasks)}</form>`;
   }
+
   bindHandlers() {
-    let gameAnswers = this.element.querySelectorAll('.game__answer');
-    for ( let i = 0; i < gameAnswers.length; i++) {
-      gameAnswers[i].onclick = this.callback;
-    }
+    this.actionElements = this.element.querySelectorAll('.game__answer');
+    super.bindHandlers();
   }
 }

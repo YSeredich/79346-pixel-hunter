@@ -1,4 +1,2 @@
-import createInfo from './templates/intro';
-import select from './select';
-
-select(createInfo());
+import Application from './application';
+Application.showIntro();

@@ -2,12 +2,11 @@
  * Created by yulia on 19.11.2016.
  */
 import AbstractView from '../abstractView';
-import select from '../select';
+import Application from '../application';
 import BackView from './components/back';
-import renderGameScreen from './game-screen';
 import dataUnited from '../data/game-data';
 
-class RulesView extends AbstractView {
+export default class RulesView extends AbstractView {
   getMarkup() {
     const data = dataUnited.rulesData;
     const back = new BackView();
@@ -21,23 +20,31 @@ class RulesView extends AbstractView {
     </form>
   </div>`;
   }
-  bindHandlers() {
-    let rulesForm = this.element.querySelector('.rules__form');
-    let rulesSubmit = rulesForm.querySelector('.rules__button');
-    let rulesInput = rulesForm.querySelector('.rules__input');
 
-    rulesInput.oninput = (e) => {
-      if (rulesInput.value) {
-        rulesSubmit.removeAttribute('disabled');
+  bindHandlers() {
+    this.rulesForm = this.element.querySelector('.rules__form');
+    this.rulesInput = this.rulesForm.querySelector('.rules__input');
+    this.rulesSubmit = this.rulesForm.querySelector('.rules__button');
+
+    this.inputCallback = (e) => {
+      if (this.rulesInput.value) {
+        this.rulesSubmit.removeAttribute('disabled');
       } else {
-        rulesSubmit.setAttribute('disabled', '');
+        this.rulesSubmit.setAttribute('disabled', '');
       }
     };
-    rulesForm.onsubmit = (e) => {
+
+    this.submitCallback = (e) => {
       e.preventDefault();
-      select(renderGameScreen());
+      Application.showGame();
     };
+
+    this.rulesInput.addEventListener('input', this.inputCallback);
+    this.rulesForm.addEventListener('submit', this.submitCallback);
+  }
+
+  clearHandlers() {
+    this.rulesInput.removeEventListener('input', this.inputCallback);
+    this.rulesForm.removeEventListener('submit', this.submitCallback);
   }
 }
-
-export default () => new RulesView().element;
