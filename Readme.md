@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
 * Студент: [Yulia Seredich](https://up.htmlacademy.ru/ecmascript/1/user/79346).
-* Наставник: [Евгений Датский] (https://htmlacademy.ru/profile/id129440).
+* Наставник: [Евгений Датский](https://htmlacademy.ru/profile/id129440).
 
 ---
 
